@@ -3,33 +3,101 @@
     <head>
         <title>Calculadora Universalidad - TALF</title>
         <script>
-            // funcion cantorizacion
+            // funcion codificacion cantor 21
             // N² -> N
-            function cantorizacion21()
+            function codificacionCantor21()
             {
                 var x = parseInt(document.cantor21.x.value); 
                 var y = parseInt(document.cantor21.y.value);
-                document.cantor21.cantor21result.value = (((x+y)*(x+y+1))/2)+y
+                if (x < 0 || y < 0) {
+                    alert("X e Y deben de ser igual o mayores que 0.")
+                } else {
+                    document.cantor21.codificacionCantor21Result.value = (x+y)*(x+y+1)/2+y
+                }
+            }
+            function codificacionCantor21Rec(x,y)
+            {
+                return (x+y)*(x+y+1)/2+y;
+            }
+            // funcion codificacion cantor generalizada
+            // N^(k+1) -> N
+            function codificacionCantorG()
+            {
+                var numbers = document.cantorG.numeros.value.split(/[;]/);
+                var xk = [];
+                for (i = 0; i < numbers.length; i++) {
+                    var v = parseInt(numbers[i]);
+                    if (v < 0) {
+                        alert("Los numeros introducidos deben de ser naturales.");
+                    }
+                    xk[i] = v;
+                }
+                console.log(xk[0]+xk[1]);
+                var result = codificacionCantorGRec(xk);
+                if (Number.isInteger(result)) {
+                    document.cantorG.codificacionCantorGResult.value = result;
+                } else {
+                    alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
+                }
+                
+            }
+            function codificacionCantorGRec(nums)
+            {
+                if (nums.length == 2) {
+                    return codificacionCantor21Rec(nums[0],nums[1]);
+                } else {
+                    nums.shift();
+                    return codificacionCantor21Rec(nums[0],codificacionCantorGRec(nums));
+                }
             }
         </script>
     </head>
     <body>
         <center><h1>Calculadora Universalidad</h1></center>
-        <center><h2 style="font-weight:normal">Teoria de Automatas y Lenguajes Formales</h2></center>
-        <center><h3 style="font-weight:normal"><i>Serafin Cortes Ramirez</i></h3></center>
+        <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
+        <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga</i></h3></center>
         <br>
         <br>
         <center>
             <form name="cantor21">
-                <h2>Introduce un valor X y un valor Y</h2>
-                X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h2>Codificaci&oacute;n de Cantor o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                    &sigma;
+                    <span class="supsub" style="position: absolute;">
+                        <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">2</sup>
+                        <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
+                    </span>
+                </h2>
+                <h3 style="font-weight: normal">Introduce un valor X y un valor Y</h3>
+                X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;
                 Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
                 <br>
                 <br>
-                <input type="button" value="Calcular" onclick="cantorizacion21()">
+                <input type="button" value="Calcular" onclick="codificacionCantor21()">
                 <br>
                 <br>
-                Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantor21result" readonly>
+                Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCantor21Result" readonly>
+            </form>
+            <br>
+            <br>
+            <form name="cantorG">
+                <h2>Codificaci&oacute;n de Cantor Generalizada o <i>cantorizaci&oacute;n</i>, 
+                    &sigma;
+                    <span class="supsub" style="position: absolute;">
+                        <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">k+1</sup>
+                        <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
+                    </span>
+                </h2>
+                <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
+                <i><b>Ejemplo: </b>1;2;3;4</i>
+                <br>
+                <br>
+                <textarea name ="numeros" rows="4" cols="50"></textarea>
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="codificacionCantorG()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCantorGResult" readonly>
             </form>
         </center>
     </body>
