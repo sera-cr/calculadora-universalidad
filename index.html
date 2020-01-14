@@ -3,27 +3,28 @@
     <head>
         <title>Calculadora Universalidad - TALF</title>
         <script>
-            // funcion codificacion cantor 21
-            // N² -> N
-            function codificacionCantor21()
+            // funcion cantorizacion tamanyo dos
+            // N^2 -> N
+            function cantorizacionTamanyo2()
             {
-                var x = parseInt(document.cantor21.x.value); 
-                var y = parseInt(document.cantor21.y.value);
+                var x = parseInt(document.cantorizacionTam2.x.value); 
+                var y = parseInt(document.cantorizacionTam2.y.value);
                 if (x < 0 || y < 0) {
-                    alert("X e Y deben de ser igual o mayores que 0.")
+                    alert("Error. \nX e Y deben de ser igual o mayores que 0.")
                 } else {
-                    document.cantor21.codificacionCantor21Result.value = (x+y)*(x+y+1)/2+y
+                    document.cantorizacionTam2.cantorizacionTamanyo2Result.value = cantorizacionTamanyo2Return(x,y);
                 }
             }
-            function codificacionCantor21Rec(x,y)
+            // funcion cantorizacion tamanyo dos con return
+            function cantorizacionTamanyo2Return(x,y)
             {
                 return (x+y)*(x+y+1)/2+y;
             }
-            // funcion codificacion cantor generalizada
+            // funcion cantorizacion generalizada
             // N^(k+1) -> N
-            function codificacionCantorG()
+            function cantorizacionG()
             {
-                var numbers = document.cantorG.numeros.value.split(/[;]/);
+                var numbers = document.cantorizacionGeneral.numeros.value.split(/[;]/);
                 var xk = [];
                 for (i = 0; i < numbers.length; i++) {
                     var v = parseInt(numbers[i]);
@@ -33,72 +34,197 @@
                     xk[i] = v;
                 }
                 console.log(xk[0]+xk[1]);
-                var result = codificacionCantorGRec(xk);
+                var result = cantorizacionGRec(xk);
                 if (Number.isInteger(result)) {
-                    document.cantorG.codificacionCantorGResult.value = result;
+                    document.cantorizacionGeneral.cantorizacionGResult.value = result;
                 } else {
                     alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
                 }
                 
             }
-            function codificacionCantorGRec(nums)
+            // funcion cantorizacion generalizada recursiva
+            function cantorizacionGRec(nums)
             {
                 if (nums.length == 2) {
-                    return codificacionCantor21Rec(nums[0],nums[1]);
+                    return cantorizacionTamanyo2Return(nums[0],nums[1]);
                 } else {
                     nums.shift();
-                    return codificacionCantor21Rec(nums[0],codificacionCantorGRec(nums));
+                    return cantorizacionTamanyo2Return(nums[0],cantorizacionGRec(nums));
+                }
+            }
+            // funcion decantorizacion tamanyo dos
+            // N -> N
+            function decantorizacionTamanyo2()
+            {
+                var numero = parseInt(document.decantorizacionTam2.n.value);
+                if (numero < 0) {
+                    alert("Error. \nEl numero tiene que ser mayor o igual que 0.")
+                } else {
+                    document.decantorizacionTam2.decantorizacionTamanyo2Result.value = decantorizacionTamanyo2Return(numero);
+                }
+            }
+            // funcion decantorizacion tamanyo dos con return
+            function decantorizacionTamanyo2Return(n)
+            {
+                return "(" + decantorizacionTamanyo2ReturnPrimeraComponente(n) + "," + decantorizacionTamanyo2ReturnSegundaComponente(n) + ")";
+            }
+            // funcion decantorizacion tamanyo 2 primera componente
+            function decantorizacionTamanyo2ReturnPrimeraComponente(n)
+            {
+                return diagonal(n) - decantorizacionTamanyo2ReturnSegundaComponente(n);
+            }
+            // funcion decantorizacion tamanyo 2 segunda componente
+            function decantorizacionTamanyo2ReturnSegundaComponente(n)
+            {
+                return n - cantorizacionTamanyo2Return(diagonal(n),0);
+            }
+            // funcion diagonal o d(z) siendo z nuestro numero
+            // calculado aritmeticamente
+            function diagonal(n)
+            {
+                return (Math.sqrt(8*n+1)-1)/2;
+            }
+            // funcion decantorizacion generalizada
+            // N -> N
+            function decantorizacionG()
+            {
+                var n = parseInt(document.decantorizacionGeneral.n.value);
+                var k = parseInt(document.decantorizacionGeneral.k.value);
+                if (n < 0 || k < 0) {
+                    alert("Error. \nEl numero y k tienen que ser mayor o igual que 0.")
+                } else {
+                    var result = "(";
+                    result.push(decantorizacionGReturn(n,k,i));
+                    result = result.slice(0,result.length-1);
+                    result.push(")");
+                    document.decantorizacionGeneral.decantorizacionGResult.value = result;
+                }
+            }
+            // funcion decantorizacion generalizada con return
+            function decantorizacionGRec(n,k,i)
+            {
+                if (i == 0) {
+                    return decantorizacionTamanyo2ReturnPrimeraComponente(n);
+                } else if (i <= k) {
+                    return deca
                 }
             }
         </script>
     </head>
     <body>
-        <center><h1>Calculadora Universalidad</h1></center>
-        <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
-        <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga</i></h3></center>
-        <br>
-        <br>
-        <center>
-            <form name="cantor21">
-                <h2>Codificaci&oacute;n de Cantor o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
-                    &sigma;
-                    <span class="supsub" style="position: absolute;">
-                        <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">2</sup>
-                        <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
-                    </span>
-                </h2>
-                <h3 style="font-weight: normal">Introduce un valor X y un valor Y</h3>
-                X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;
-                Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
-                <br>
-                <br>
-                <input type="button" value="Calcular" onclick="codificacionCantor21()">
-                <br>
-                <br>
-                Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCantor21Result" readonly>
-            </form>
+        <div class="scroll" style="overflow-y: auto;">
+            <center><h1>Calculadora Universalidad</h1></center>
+            <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
+            <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga - Enero 2020</i></h3></center>
             <br>
             <br>
-            <form name="cantorG">
-                <h2>Codificaci&oacute;n de Cantor Generalizada o <i>cantorizaci&oacute;n</i>, 
-                    &sigma;
-                    <span class="supsub" style="position: absolute;">
-                        <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">k+1</sup>
-                        <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
-                    </span>
-                </h2>
-                <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
-                <i><b>Ejemplo: </b>1;2;3;4</i>
+            <center>
+                <form name="cantorizacionTam2">
+                    <h2>
+                        Codificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">2</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
+                        </span>
+                    </h2>
+                    <h3 style="font-weight: normal">Introduce un n&uacute;mero X y un n&uacute;mero Y, ambos mayores o iguales que 0</h3>
+                    X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;
+                    Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="cantorizacionTamanyo2()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionTamanyo2Result" readonly>
+                </form>
                 <br>
                 <br>
-                <textarea name ="numeros" rows="4" cols="50"></textarea>
+                <form name="cantorizacionGeneral">
+                    <h2>
+                        Codificaci&oacute;n de Cantor Generalizada o <i>cantorizaci&oacute;n</i>, 
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">k+1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
+                        </span>
+                    </h2>
+                    <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
+                    <i><b>Ejemplo: </b>1;2;3;4</i>
+                    <br>
+                    <br>
+                    <textarea name ="numeros" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="cantorizacionG()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionGResult" readonly>
+                </form>
                 <br>
                 <br>
-                <input type="button" value="Calcular" onclick="codificacionCantorG()">
+                <form name="decantorizacionTam2">
+                    <h2>
+                        Decodificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>decantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                        (&sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,1</sub>
+                        </span>&nbsp;&nbsp;,
+                        &sigma; 
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,2</sub>
+                        </span>&nbsp;&nbsp;)
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0</h3>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="decantorizacionTamanyo2()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionTamanyo2Result" readonly>
+                </form>
                 <br>
                 <br>
-                Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCantorGResult" readonly>
-            </form>
-        </center>
+                <form name="decantorizacionGeneral">
+                    <h2>
+                        Decodificaci&oacute;n de Cantor Generalizada o <i>decantorizaci&oacute;n</i>, 
+                        (&sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,i</sub>
+                        </span>&nbsp;&nbsp;&nbsp;, . . . , 
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,k+1</sub>
+                        </span>&nbsp;&nbsp;&nbsp;&nbsp;)
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0, y el valor de k tambi&eacute;n mayor que 0</h3>
+                    <i style="font-size: 18px">
+                        Recuerda que para k = 2 y i=1, la expresi&oacute;n quedar&iacute;a como:
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px;">3,1</sub>
+                        </span>
+                    </i>
+                    <br>
+                    <br>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">&nbsp;&nbsp;&nbsp;
+                    k:&nbsp;&nbsp;<input type="text" size="8" name="k">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="decantorizacionG()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionGResult" readonly>
+                </form>
+                <br>
+                <br>
+            </center>
+        </div>
     </body>
 </html>
