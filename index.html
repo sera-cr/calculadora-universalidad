@@ -2,11 +2,35 @@
 <html>
     <head>
         <title>Calculadora Universalidad - TALF</title>
-        <script></script>
+        <script>
+            // funcion cantorizacion
+            // N² -> N
+            function cantorizacion21()
+            {
+                var x = parseInt(document.cantor21.x.value); 
+                var y = parseInt(document.cantor21.y.value);
+                document.cantor21.cantor21result.value = (((x+y)*(x+y+1))/2)+y
+            }
+        </script>
     </head>
     <body>
-        <center><h1><b>Calculadora Universalidad</b></h1></center>
-        <center><h2>Teoria de Automatas y Lenguajes Formales</h2></center>
-        <center><h3></h3></center>
+        <center><h1>Calculadora Universalidad</h1></center>
+        <center><h2 style="font-weight:normal">Teoria de Automatas y Lenguajes Formales</h2></center>
+        <center><h3 style="font-weight:normal"><i>Serafin Cortes Ramirez</i></h3></center>
+        <br>
+        <br>
+        <center>
+            <form name="cantor21">
+                <h2>Introduce un valor X y un valor Y</h2>
+                X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="cantorizacion21()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantor21result" readonly>
+            </form>
+        </center>
     </body>
 </html>
