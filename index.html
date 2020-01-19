@@ -25,16 +25,8 @@
             function cantorizacionG()
             {
                 var numbers = document.cantorizacionGeneral.numeros.value.split(/[;]/);
-                var xk = [];
-                for (i = 0; i < numbers.length; i++) {
-                    var v = parseInt(numbers[i]);
-                    if (v < 0) {
-                        alert("Los numeros introducidos deben de ser naturales.");
-                    }
-                    xk[i] = v;
-                }
-                console.log(xk[0]+xk[1]);
-                var result = cantorizacionGRec(xk);
+                numbers = leeArray(numbers);
+                var result = cantorizacionGRec(numbers);
                 if (Number.isInteger(result)) {
                     document.cantorizacionGeneral.cantorizacionGResult.value = result;
                 } else {
@@ -42,14 +34,26 @@
                 }
                 
             }
+            function leeArray(array) {
+                var result = [];
+                for (i = 0; i < array.length; i++) {
+                    var v = parseInt(array[i]);
+                    if (v < 0) {
+                        alert("Los numeros introducidos deben de ser naturales.");
+                    }
+                    result[i] = v;
+                }
+                return result;
+            }
             // funcion cantorizacion generalizada recursiva
             function cantorizacionGRec(nums)
             {
                 if (nums.length == 2) {
                     return cantorizacionTamanyo2Return(nums[0],nums[1]);
                 } else {
+                    var n0 = nums[0];
                     nums.shift();
-                    return cantorizacionTamanyo2Return(nums[0],cantorizacionGRec(nums));
+                    return cantorizacionTamanyo2Return(n0,cantorizacionGRec(nums));
                 }
             }
             // funcion decantorizacion tamanyo dos
@@ -82,31 +86,71 @@
             // calculado aritmeticamente
             function diagonal(n)
             {
-                return (Math.sqrt(8*n+1)-1)/2;
+                return Math.trunc((Math.sqrt(8*n+1)-1)/2);
             }
             // funcion decantorizacion generalizada
             // N -> N
             function decantorizacionG()
             {
                 var n = parseInt(document.decantorizacionGeneral.n.value);
-                var k = parseInt(document.decantorizacionGeneral.k.value);
-                if (n < 0 || k < 0) {
+                var kp1 = parseInt(document.decantorizacionGeneral.k.value)+1;
+                if (n < 0 || kp1 < 0) {
                     alert("Error. \nEl numero y k tienen que ser mayor o igual que 0.")
                 } else {
-                    var result = "(";
-                    result.push(decantorizacionGReturn(n,k,i));
-                    result = result.slice(0,result.length-1);
-                    result.push(")");
-                    document.decantorizacionGeneral.decantorizacionGResult.value = result;
+                    var result = [];
+                    result.unshift(")");
+                    for (var i = kp1; i >= 1; i--) {
+                        result.unshift(decantorizacionGRec(n,kp1,i));
+                        result.unshift(",");
+                    }
+                    result.shift();
+                    result.unshift("(");
+                    document.decantorizacionGeneral.decantorizacionGResult.value = result.join('');;
                 }
             }
             // funcion decantorizacion generalizada con return
-            function decantorizacionGRec(n,k,i)
+            function decantorizacionGRec(n,kp1,i)
             {
-                if (i == 0) {
+                if (kp1 == 1) {
+                    return n;
+                } else if (i == 1) {
                     return decantorizacionTamanyo2ReturnPrimeraComponente(n);
-                } else if (i <= k) {
-                    return deca
+                } else {
+                    return decantorizacionGRec(decantorizacionTamanyo2ReturnSegundaComponente(n),kp1-1,i-1)
+                }
+            }
+            // funcion L(x) -> anexo 3 de godel es array.length
+            // funcion godelizacion
+            // N^* -> N
+            function godelizacion()
+            {
+                var result = 0;
+                var numbers = document.codificacionGodel.numeros.value.split(/[;]/);
+                numbers = leeArray(numbers);
+                if (numbers.length != 0) {
+                    result = cantorizacionTamanyo2Return(numbers.length-1,cantorizacionGRec(numbers))+1;
+                }
+                document.codificacionGodel.codificacionGodelResult.value = result;
+            }
+            // funcion longitud (dado un z)
+            function longitud(z)
+            {
+                if (z == 0) {
+                    return 0;
+                } else {
+                    return decantorizacionTamanyo2ReturnPrimeraComponente(z-1)+1;
+                }
+            }
+            // funcion degodelizacion
+            // N^2 -> N
+            function degodelizacion()
+            {
+                var z = document.decodificacionGodel.n.value;
+                var k = document.decodificacionGodel.k.value;
+                if (z == 0 || k > longitud(z)) {
+                    document.decodificacionGodelResult.value = 0;
+                } else {
+                    
                 }
             }
         </script>
@@ -221,6 +265,40 @@
                     <br>
                     <br>
                     Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionGResult" readonly>
+                </form>
+                <br>
+                <br>
+                <form name="codificacionGodel">
+                    <h2>
+                        Codificaci&oacute;n de G&ouml;del o <i>g&ouml;delizaci&oacute;n</i>, <i>god</i>
+                    </h2>
+                    <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
+                    <i><b>Ejemplo: </b>1;2;3;4</i>
+                    <br>
+                    <br>
+                    <textarea name ="numeros" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="godelizacion()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionGodelResult" readonly>
+                </form>
+                <br>
+                <br>
+                <form name="decodificacionGodel">
+                    <h2>
+                        Decodificaci&oacute;n de G&ouml;del o <i>deg&ouml;delizaci&oacute;n</i>, <i>degod</i>
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0, y el valor de k tambi&eacute;n mayor que 0</h3>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">&nbsp;&nbsp;&nbsp;
+                    k:&nbsp;&nbsp;<input type="text" size="8" name="k">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="degodelizacion()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decodificacionGodelResult" readonly>
                 </form>
                 <br>
                 <br>
