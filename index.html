@@ -5,18 +5,18 @@
         <script>
             // funcion cantorizacion tamanyo dos
             // N^2 -> N
-            function cantorizacionTamanyo2()
+            function cantorizacionTam2()
             {
                 var x = parseInt(document.cantorizacionTam2.x.value); 
                 var y = parseInt(document.cantorizacionTam2.y.value);
                 if (x < 0 || y < 0) {
                     alert("Error. \nX e Y deben de ser igual o mayores que 0.")
                 } else {
-                    document.cantorizacionTam2.cantorizacionTamanyo2Result.value = cantorizacionTamanyo2Return(x,y);
+                    document.cantorizacionTam2.cantorizacionTam2Result.value = cantorizacionTam2Return(x,y);
                 }
             }
             // funcion cantorizacion tamanyo dos con return
-            function cantorizacionTamanyo2Return(x,y)
+            function cantorizacionTam2Return(x,y)
             {
                 return (x+y)*(x+y+1)/2+y;
             }
@@ -49,38 +49,38 @@
             function cantorizacionGRec(nums)
             {
                 if (nums.length == 2) {
-                    return cantorizacionTamanyo2Return(nums[0],nums[1]);
+                    return cantorizacionTam2Return(nums[0],nums[1]);
                 } else {
                     var n0 = nums[0];
                     nums.shift();
-                    return cantorizacionTamanyo2Return(n0,cantorizacionGRec(nums));
+                    return cantorizacionTam2Return(n0,cantorizacionGRec(nums));
                 }
             }
             // funcion decantorizacion tamanyo dos
             // N -> N
-            function decantorizacionTamanyo2()
+            function decantorizacionTam2()
             {
                 var numero = parseInt(document.decantorizacionTam2.n.value);
                 if (numero < 0) {
                     alert("Error. \nEl numero tiene que ser mayor o igual que 0.")
                 } else {
-                    document.decantorizacionTam2.decantorizacionTamanyo2Result.value = decantorizacionTamanyo2Return(numero);
+                    document.decantorizacionTam2.decantorizacionTam2Result.value = decantorizacionTam2Return(numero);
                 }
             }
             // funcion decantorizacion tamanyo dos con return
-            function decantorizacionTamanyo2Return(n)
+            function decantorizacionTam2Return(n)
             {
-                return "(" + decantorizacionTamanyo2ReturnPrimeraComponente(n) + "," + decantorizacionTamanyo2ReturnSegundaComponente(n) + ")";
+                return "(" + decantorizacionTam2PrimComp(n) + "," + decantorizacionTam2SegComp(n) + ")";
             }
             // funcion decantorizacion tamanyo 2 primera componente
-            function decantorizacionTamanyo2ReturnPrimeraComponente(n)
+            function decantorizacionTam2PrimComp(n)
             {
-                return diagonal(n) - decantorizacionTamanyo2ReturnSegundaComponente(n);
+                return diagonal(n) - decantorizacionTam2SegComp(n);
             }
             // funcion decantorizacion tamanyo 2 segunda componente
-            function decantorizacionTamanyo2ReturnSegundaComponente(n)
+            function decantorizacionTam2SegComp(n)
             {
-                return n - cantorizacionTamanyo2Return(diagonal(n),0);
+                return n - cantorizacionTam2Return(diagonal(n),0);
             }
             // funcion diagonal o d(z) siendo z nuestro numero
             // calculado aritmeticamente
@@ -97,26 +97,32 @@
                 if (n < 0 || kp1 < 0) {
                     alert("Error. \nEl numero y k tienen que ser mayor o igual que 0.")
                 } else {
-                    var result = [];
-                    result.unshift(")");
-                    for (var i = kp1; i >= 1; i--) {
-                        result.unshift(decantorizacionGRec(n,kp1,i));
-                        result.unshift(",");
-                    }
-                    result.shift();
-                    result.unshift("(");
-                    document.decantorizacionGeneral.decantorizacionGResult.value = result.join('');;
+                    var result = decantorizacionGReturn(n,kp1);
+                    document.decantorizacionGeneral.decantorizacionGResult.value = result.join('');
                 }
             }
-            // funcion decantorizacion generalizada con return
+            // funcion decantorizacion generalizada return
+            function decantorizacionGReturn(n,kp1)
+            {
+                var result = [];
+                result.unshift(")");
+                for (var i = kp1; i >= 1; i--) {
+                    result.unshift(decantorizacionGRec(n,kp1,i));
+                    result.unshift(",");
+                }
+                result.shift();
+                result.unshift("(");
+                return result;
+            }
+            // funcion decantorizacion generalizada recursiva
             function decantorizacionGRec(n,kp1,i)
             {
                 if (kp1 == 1) {
                     return n;
                 } else if (i == 1) {
-                    return decantorizacionTamanyo2ReturnPrimeraComponente(n);
+                    return decantorizacionTam2PrimComp(n);
                 } else {
-                    return decantorizacionGRec(decantorizacionTamanyo2ReturnSegundaComponente(n),kp1-1,i-1)
+                    return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1,i-1)
                 }
             }
             // funcion L(x) -> anexo 3 de godel es array.length
@@ -128,7 +134,7 @@
                 var numbers = document.codificacionGodel.numeros.value.split(/[;]/);
                 numbers = leeArray(numbers);
                 if (numbers.length != 0) {
-                    result = cantorizacionTamanyo2Return(numbers.length-1,cantorizacionGRec(numbers))+1;
+                    result = cantorizacionTam2Return(numbers.length-1,cantorizacionGRec(numbers))+1;
                 }
                 document.codificacionGodel.codificacionGodelResult.value = result;
             }
@@ -138,7 +144,7 @@
                 if (z == 0) {
                     return 0;
                 } else {
-                    return decantorizacionTamanyo2ReturnPrimeraComponente(z-1)+1;
+                    return decantorizacionTam2PrimComp(z-1)+1;
                 }
             }
             // funcion degodelizacion
@@ -150,7 +156,8 @@
                 if (z == 0 || k > longitud(z)) {
                     document.decodificacionGodelResult.value = 0;
                 } else {
-                    
+                    var result = decantorizacionGRec(decantorizacionTam2SegComp(z-1),longitud(z),k);
+                    document.decodificacionGodel.decodificacionGodelResult.value = result;
                 }
             }
         </script>
@@ -177,10 +184,10 @@
                     Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
                     <br>
                     <br>
-                    <input type="button" value="Calcular" onclick="cantorizacionTamanyo2()">
+                    <input type="button" value="Calcular" onclick="cantorizacionTam2()">
                     <br>
                     <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionTamanyo2Result" readonly>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionTam2Result" readonly>
                 </form>
                 <br>
                 <br>
@@ -225,10 +232,10 @@
                     N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
                     <br>
                     <br>
-                    <input type="button" value="Calcular" onclick="decantorizacionTamanyo2()">
+                    <input type="button" value="Calcular" onclick="decantorizacionTam2()">
                     <br>
                     <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionTamanyo2Result" readonly>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionTam2Result" readonly>
                 </form>
                 <br>
                 <br>
