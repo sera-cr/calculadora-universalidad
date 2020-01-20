@@ -152,12 +152,23 @@
             function degodelizacion()
             {
                 var z = document.decodificacionGodel.n.value;
-                var k = document.decodificacionGodel.k.value;
+                var result = [];
+                result.unshift(")");
+                for (var k = longitud(z); k >= 1; k--) {
+                    result.unshift(degodelizacionReturn(z,k));
+                    result.unshift(",");
+                }
+                result.shift();
+                result.unshift("(");
+                document.decodificacionGodel.decodificacionGodelResult.value = result.join('');
+            }
+            // funcion degodelizacion con return
+            function degodelizacionReturn(z,k)
+            {
                 if (z == 0 || k > longitud(z)) {
-                    document.decodificacionGodelResult.value = 0;
+                    return 0;
                 } else {
-                    var result = decantorizacionGRec(decantorizacionTam2SegComp(z-1),longitud(z),k);
-                    document.decodificacionGodel.decodificacionGodelResult.value = result;
+                    return decantorizacionGRec(decantorizacionTam2SegComp(z-1),longitud(z),k);
                 }
             }
         </script>
@@ -297,9 +308,8 @@
                     <h2>
                         Decodificaci&oacute;n de G&ouml;del o <i>deg&ouml;delizaci&oacute;n</i>, <i>degod</i>
                     </h2>
-                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0, y el valor de k tambi&eacute;n mayor que 0</h3>
-                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">&nbsp;&nbsp;&nbsp;
-                    k:&nbsp;&nbsp;<input type="text" size="8" name="k">
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0 <i>(devuelve las k componentes en un vector)</i></h3>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
                     <br>
                     <br>
                     <input type="button" value="Calcular" onclick="degodelizacion()">
