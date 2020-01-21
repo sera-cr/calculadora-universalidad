@@ -132,11 +132,17 @@
             {
                 var result = 0;
                 var numbers = document.codificacionGodel.numeros.value.split(/[;]/);
-                numbers = leeArray(numbers);
+                document.codificacionGodel.codificacionGodelResult.value = godelizacionReturn(numbers);
+            }
+            // funcion godelizacion return
+            function godelizacionReturn(array)
+            {
+                var result = 0;
+                var numbers = leeArray(array);
                 if (numbers.length != 0) {
                     result = cantorizacionTam2Return(numbers.length-1,cantorizacionGRec(numbers))+1;
                 }
-                document.codificacionGodel.codificacionGodelResult.value = result;
+                return result;
             }
             // funcion longitud (dado un z)
             function longitud(z)
@@ -195,7 +201,7 @@
                     return 5*cantorizacionTam2Return(arrayLinea[1]-1,arrayLinea[5]-1)+2;
                 } else if (arrayLinea.length == 9 && arrayLinea[6] == '-') {
                     return 5*cantorizacionTam2Return(arrayLinea[1]-1,arrayLinea[5]-1)+3;
-                } else {
+                } else { // ToDo: cambiar else por else if y en else un alert
                     return 5*cantorizacionTam2Return(arrayLinea[6]-1,CodiReturn(arrayLinea.slice(12,arrayLinea.length-2)))+4
                 }
             }
@@ -208,17 +214,23 @@
             function CodiReturn(arrayLineas)
             {
                 var lineas = separarSentencias(arrayLineas);
-                var result = 0;
-                lineas.forEach(element => {
-                    result += codiReturn(tratarLinea(element));
-                });
-                return result;
+                var result = [];
+                for (var i = 0; i < lineas.length; i++) {
+                    result[i] = codiReturn(tratarLinea(lineas[i]));
+                }
+                return godelizacionReturn(result)-1;
             }
             function separarSentencias(arrayLineas)
             {
                 var result = arrayLineas.join('').replace(/;/gi, ";,").split(/\,/);
                 result.pop(); // eliminamos el ultimo elemento generado por el ultimo ;
                 return result;
+            }
+            // funcion Codificacion de codigos
+            function Codi()
+            {
+                var arrayLineas = tratarLinea(document.codificacionCodigosWhile.codigo.value);
+                document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = CodiReturn(arrayLineas);
             }
         </script>
     </head>
@@ -392,6 +404,33 @@
                     <br>
                     <br>
                     Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionSentenciasWhileResult" readonly>
+                </form>
+                <br>
+                <br>
+                <form name="codificacionCodigosWhile">
+                    <h2>
+                        Codificaci&oacute;n de c&oacute;digos While o <i>Codi</i>
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduzca el c&oacute;digo While a codificar<b> e introduzca ; al final de cada sentencia</b></h3>
+                    <p>Recuerda, las sentencias posibles son:</p>
+                    <ul>
+                        <li>Xi:= 0;</li>
+                        <li>Xi:= Xj;</li>
+                        <li>Xi:= Xj+1;</li>
+                        <li>Xi:= Xj-1;</li>
+                        <li>while Xi != 0 do S1 od</li>
+                    </ul>
+                    <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle)</p>
+                    Sentencia o bucle While:
+                    <br>
+                    <br>
+                    <textarea name="codigo" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="codi()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCodigosWhileResult" readonly>
                 </form>
                 <br>
                 <br>
