@@ -230,7 +230,13 @@
             function Codi()
             {
                 var arrayLineas = tratarLinea(document.codificacionCodigosWhile.codigo.value);
-                document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = CodiReturn(arrayLineas);
+                var result = CodiReturn(arrayLineas);
+                if (Number.isInteger(result)) {
+                    document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = result;
+                } else {
+                    alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
+                }
+                
             }
         </script>
     </head>
@@ -411,6 +417,9 @@
                     <h2>
                         Codificaci&oacute;n de c&oacute;digos While o <i>Codi</i>
                     </h2>
+                    <h1>
+                        Work in progress. Necesita n&uacute;meros astron&oacute;micos.
+                    </h1>
                     <h3 style="font-weight: normal;">Introduzca el c&oacute;digo While a codificar<b> e introduzca ; al final de cada sentencia</b></h3>
                     <p>Recuerda, las sentencias posibles son:</p>
                     <ul>
