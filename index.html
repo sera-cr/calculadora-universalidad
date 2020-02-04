@@ -2,17 +2,315 @@
 <html>
     <head>
         <title>Calculadora Universalidad - TALF</title>
+        <style>
+            /* Estilo navbar */
+            #navbar {
+                overflow: hidden;
+                background-color: #333;
+            }
+            /* Enlaces navbar */
+            #navbar a {
+                opacity: 100%;
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px;
+                text-decoration: none;
+            }
+            /* hover navbar */
+            #navbar a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* contenido */
+            .content {
+                padding: 16px;
+            }
+            /* funcion "sticky" se anyade con js */
+            .sticky {
+                position: fixed;
+                top: 0;
+                width: 100%;
+            }
+            /* padding extra para prevenir movimientos rapidos */
+            .sticky + .content {
+                padding-top: 60px;
+            }
+            #navbar a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="scroll" style="overflow-y: auto;">
+            <center><h1 name="inicio">Calculadora Universalidad</h1></center>
+            <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
+            <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga - Enero 2020</i></h3></center>
+            <br>
+            <br>
+            <center>
+                <div id="navbar">
+                    <a href="#" id="inicio">Inicio</a>
+                    <a href="#ct2" id="cantorT2">
+                        <i>Cantorizaci&oacute;n Tama&ntilde;o 2</i>
+                    </a>
+                    <a href="#cg" id="cantorG">
+                        <i>Cantorizaci&oacute;n Generalizada</i>
+                    </a>
+                    <a href="#dct2" id="decantorT2">
+                        <i>Decantorizaci&oacute;n Tama&ntilde;o 2</i>
+                    </a>
+                    <a href="#dcg" id="decantorG">
+                        <i>Decantorizaci&oacute;n Generalizada</i>
+                    </a>
+                    <a href="#god" id="codgod">
+                        <i>god</i>
+                    </a>
+                    <a href="#degod" id="coddegod">
+                        <i>degod</i>
+                    </a>
+                    <a href="#codi" id="codcodi">
+                        <i>codi</i>
+                    </a>
+                    <a href="#Codi" id="codCodi">
+                        <i>Codi</i>
+                    </a>
+                </div>
+                <div id="ct2"></div> <!-- salto antes de cantorizacion t2-->
+                <br>
+                <br>
+                <form name="cantorizacionT2">
+                    <h2>
+                        Codificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">2</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
+                        </span>
+                    </h2>
+                    <h3 style="font-weight: normal">Introduce un n&uacute;mero X y un n&uacute;mero Y, ambos mayores o iguales que 0</h3>
+                    X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;
+                    Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="cantorizacionTam2()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionTam2Result" readonly>
+                </form>
+                <div id="cg"></div> <!-- salto antes cantorizacion g-->
+                <br>
+                <br>
+                <form name="cantorizacionGeneral">
+                    <h2>
+                        Codificaci&oacute;n de Cantor Generalizada o <i>cantorizaci&oacute;n</i>, 
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">k+1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
+                        </span>
+                    </h2>
+                    <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
+                    <i><b>Ejemplo: </b>1;2;3;4</i>
+                    <br>
+                    <br>
+                    <textarea name ="numeros" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="cantorizacionG()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionGResult" readonly>
+                </form>
+                <div id="dct2"></div> <!-- salto antes decantorizacion t2-->
+                <br>
+                <br>
+                <form name="decantorizacionT2">
+                    <h2>
+                        Decodificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>decantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                        (&sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,1</sub>
+                        </span>&nbsp;&nbsp;,
+                        &sigma; 
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,2</sub>
+                        </span>&nbsp;&nbsp;)
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0</h3>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="decantorizacionTam2()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionTam2Result" readonly>
+                </form>
+                <div id="dcg"></div> <!-- salto antes decantorizacion g-->
+                <br>
+                <br>
+                <form name="decantorizacionGeneral">
+                    <h2>
+                        Decodificaci&oacute;n de Cantor Generalizada o <i>decantorizaci&oacute;n</i>, 
+                        (&sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,i</sub>
+                        </span>&nbsp;&nbsp;&nbsp;, . . . , 
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,k+1</sub>
+                        </span>&nbsp;&nbsp;&nbsp;&nbsp;)
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0, y el valor de k tambi&eacute;n mayor que 0</h3>
+                    <i style="font-size: 18px">
+                        Recuerda que para k = 2 y i=1, la expresi&oacute;n quedar&iacute;a como:
+                        &sigma;
+                        <span class="supsub" style="position: absolute;">
+                            <sup class="superscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px">1</sup>
+                            <sub class="subscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px;">3,1</sub>
+                        </span>
+                    </i>
+                    <br>
+                    <br>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">&nbsp;&nbsp;&nbsp;
+                    k:&nbsp;&nbsp;<input type="text" size="8" name="k">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="decantorizacionG()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionGResult" readonly>
+                </form>
+                <div id="god"></div> <!-- salto antes god-->
+                <br>
+                <br>
+                <form name="codificacionGodel">
+                    <h2>
+                        Codificaci&oacute;n de G&ouml;del o <i>g&ouml;delizaci&oacute;n</i>, <i>god</i>
+                    </h2>
+                    <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
+                    <i><b>Ejemplo: </b>1;2;3;4</i>
+                    <br>
+                    <br>
+                    <textarea name ="numeros" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="godelizacion()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionGodelResult" readonly>
+                </form>
+                <div id="degod"></div> <!-- salto antes degod-->
+                <br>
+                <br>
+                <form name="decodificacionGodel">
+                    <h2>
+                        Decodificaci&oacute;n de G&ouml;del o <i>deg&ouml;delizaci&oacute;n</i>, <i>degod</i>
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0 <i>(devuelve las k componentes en un vector)</i></h3>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="degodelizacion()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decodificacionGodelResult" readonly>
+                </form>
+                <div id="codi"></div> <!-- salto antes codi-->
+                <br>
+                <br>
+                <form name="codificacionSentenciasWhile">
+                    <h2>
+                        Codificaci&oacute;n de sentencias While o <i>codi</i>
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduzca la sentencia While a codificar<b> e introduzca ; al final de cada sentencia</b></h3>
+                    <p>Recuerda, las sentencias posibles son:</p>
+                    <ul>
+                        <li>Xi:= 0;</li>
+                        <li>Xi:= Xj;</li>
+                        <li>Xi:= Xj+1;</li>
+                        <li>Xi:= Xj-1;</li>
+                        <li>while Xi != 0 do S1 od</li>
+                    </ul>
+                    <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle)</p>
+                    Sentencia o bucle While:
+                    <br>
+                    <br>
+                    <textarea name="sentencia" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="codi()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionSentenciasWhileResult" readonly>
+                </form>
+                <div id="Codi"></div> <!-- salto antes Codi-->
+                <br>
+                <br>
+                <form name="codificacionCodigosWhile">
+                    <h2>
+                        Codificaci&oacute;n de c&oacute;digos While o <i>Codi</i>
+                    </h2>
+                    <h1>
+                        Work in progress. Necesita n&uacute;meros astron&oacute;micos.
+                    </h1>
+                    <h3 style="font-weight: normal;">Introduzca el c&oacute;digo While a codificar<b> e introduzca ; al final de cada sentencia</b></h3>
+                    <p>Recuerda, las sentencias posibles son:</p>
+                    <ul>
+                        <li>Xi:= 0;</li>
+                        <li>Xi:= Xj;</li>
+                        <li>Xi:= Xj+1;</li>
+                        <li>Xi:= Xj-1;</li>
+                        <li>while Xi != 0 do S1 od</li>
+                    </ul>
+                    <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle)</p>
+                    Sentencia o bucle While:
+                    <br>
+                    <br>
+                    <textarea name="codigo" rows="4" cols="50"></textarea>
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="codi()">
+                    <br>
+                    <br>
+                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCodigosWhileResult" readonly>
+                </form>
+                <br>
+                <br>
+            </center>
+        </div>
         <script>
+            // funciones para el navbar
+            // cuando la pantalla haga scroll, llame a la funcion
+            window.onscroll = function() {navbarScroll()};
+            // obtiene nuestro navbar
+            var navbar = document.getElementById("navbar");
+            // obtiene el offset del navbar
+            var sticky = navbar.offsetTop;
+            // funcion sticky
+            function navbarScroll() {
+                if (window.pageYOffset >= sticky) {
+                    navbar.classList.add("sticky");
+                } else {
+                    navbar.classList.remove("sticky");
+                }
+            }
             // funcion cantorizacion tamanyo dos
             // N^2 -> N
             function cantorizacionTam2()
             {
-                var x = parseInt(document.cantorizacionTam2.x.value); 
-                var y = parseInt(document.cantorizacionTam2.y.value);
+                var x = parseInt(document.cantorizacionT2.x.value); 
+                var y = parseInt(document.cantorizacionT2.y.value);
                 if (x < 0 || y < 0) {
                     alert("Error. \nX e Y deben de ser igual o mayores que 0.")
                 } else {
-                    document.cantorizacionTam2.cantorizacionTam2Result.value = cantorizacionTam2Return(x,y);
+                    document.cantorizacionT2.cantorizacionTam2Result.value = cantorizacionTam2Return(x,y);
                 }
             }
             // funcion cantorizacion tamanyo dos con return
@@ -60,11 +358,11 @@
             // N -> N
             function decantorizacionTam2()
             {
-                var numero = parseInt(document.decantorizacionTam2.n.value);
+                var numero = parseInt(document.decantorizacionT2.n.value);
                 if (numero < 0) {
                     alert("Error. \nEl numero tiene que ser mayor o igual que 0.")
                 } else {
-                    document.decantorizacionTam2.decantorizacionTam2Result.value = decantorizacionTam2Return(numero);
+                    document.decantorizacionT2.decantorizacionTam2Result.value = decantorizacionTam2Return(numero);
                 }
             }
             // funcion decantorizacion tamanyo dos con return
@@ -78,6 +376,7 @@
                 return diagonal(n) - decantorizacionTam2SegComp(n);
             }
             // funcion decantorizacion tamanyo 2 segunda componente
+
             function decantorizacionTam2SegComp(n)
             {
                 return n - cantorizacionTam2Return(diagonal(n),0);
@@ -239,211 +538,5 @@
                 
             }
         </script>
-    </head>
-    <body>
-        <div class="scroll" style="overflow-y: auto;">
-            <center><h1>Calculadora Universalidad</h1></center>
-            <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
-            <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga - Enero 2020</i></h3></center>
-            <br>
-            <br>
-            <center>
-                <form name="cantorizacionTam2">
-                    <h2>
-                        Codificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">2</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
-                        </span>
-                    </h2>
-                    <h3 style="font-weight: normal">Introduce un n&uacute;mero X y un n&uacute;mero Y, ambos mayores o iguales que 0</h3>
-                    X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;
-                    Y:&nbsp;&nbsp;<input type="text" size="8" name="y">
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="cantorizacionTam2()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionTam2Result" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="cantorizacionGeneral">
-                    <h2>
-                        Codificaci&oacute;n de Cantor Generalizada o <i>cantorizaci&oacute;n</i>, 
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">k+1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
-                        </span>
-                    </h2>
-                    <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
-                    <i><b>Ejemplo: </b>1;2;3;4</i>
-                    <br>
-                    <br>
-                    <textarea name ="numeros" rows="4" cols="50"></textarea>
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="cantorizacionG()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="cantorizacionGResult" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="decantorizacionTam2">
-                    <h2>
-                        Decodificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>decantorizaci&oacute;n de tama&ntilde;o dos</i>, 
-                        (&sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,1</sub>
-                        </span>&nbsp;&nbsp;,
-                        &sigma; 
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,2</sub>
-                        </span>&nbsp;&nbsp;)
-                    </h2>
-                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0</h3>
-                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="decantorizacionTam2()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionTam2Result" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="decantorizacionGeneral">
-                    <h2>
-                        Decodificaci&oacute;n de Cantor Generalizada o <i>decantorizaci&oacute;n</i>, 
-                        (&sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,i</sub>
-                        </span>&nbsp;&nbsp;&nbsp;, . . . , 
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,k+1</sub>
-                        </span>&nbsp;&nbsp;&nbsp;&nbsp;)
-                    </h2>
-                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0, y el valor de k tambi&eacute;n mayor que 0</h3>
-                    <i style="font-size: 18px">
-                        Recuerda que para k = 2 y i=1, la expresi&oacute;n quedar&iacute;a como:
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px;">3,1</sub>
-                        </span>
-                    </i>
-                    <br>
-                    <br>
-                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">&nbsp;&nbsp;&nbsp;
-                    k:&nbsp;&nbsp;<input type="text" size="8" name="k">
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="decantorizacionG()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decantorizacionGResult" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="codificacionGodel">
-                    <h2>
-                        Codificaci&oacute;n de G&ouml;del o <i>g&ouml;delizaci&oacute;n</i>, <i>god</i>
-                    </h2>
-                    <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
-                    <i><b>Ejemplo: </b>1;2;3;4</i>
-                    <br>
-                    <br>
-                    <textarea name ="numeros" rows="4" cols="50"></textarea>
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="godelizacion()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionGodelResult" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="decodificacionGodel">
-                    <h2>
-                        Decodificaci&oacute;n de G&ouml;del o <i>deg&ouml;delizaci&oacute;n</i>, <i>degod</i>
-                    </h2>
-                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0 <i>(devuelve las k componentes en un vector)</i></h3>
-                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="degodelizacion()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="decodificacionGodelResult" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="codificacionSentenciasWhile">
-                    <h2>
-                        Codificaci&oacute;n de sentencias While o <i>codi</i>
-                    </h2>
-                    <h3 style="font-weight: normal;">Introduzca la sentencia While a codificar<b> e introduzca ; al final de cada sentencia</b></h3>
-                    <p>Recuerda, las sentencias posibles son:</p>
-                    <ul>
-                        <li>Xi:= 0;</li>
-                        <li>Xi:= Xj;</li>
-                        <li>Xi:= Xj+1;</li>
-                        <li>Xi:= Xj-1;</li>
-                        <li>while Xi != 0 do S1 od</li>
-                    </ul>
-                    <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle)</p>
-                    Sentencia o bucle While:
-                    <br>
-                    <br>
-                    <textarea name="sentencia" rows="4" cols="50"></textarea>
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="codi()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionSentenciasWhileResult" readonly>
-                </form>
-                <br>
-                <br>
-                <form name="codificacionCodigosWhile">
-                    <h2>
-                        Codificaci&oacute;n de c&oacute;digos While o <i>Codi</i>
-                    </h2>
-                    <h1>
-                        Work in progress. Necesita n&uacute;meros astron&oacute;micos.
-                    </h1>
-                    <h3 style="font-weight: normal;">Introduzca el c&oacute;digo While a codificar<b> e introduzca ; al final de cada sentencia</b></h3>
-                    <p>Recuerda, las sentencias posibles son:</p>
-                    <ul>
-                        <li>Xi:= 0;</li>
-                        <li>Xi:= Xj;</li>
-                        <li>Xi:= Xj+1;</li>
-                        <li>Xi:= Xj-1;</li>
-                        <li>while Xi != 0 do S1 od</li>
-                    </ul>
-                    <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle)</p>
-                    Sentencia o bucle While:
-                    <br>
-                    <br>
-                    <textarea name="codigo" rows="4" cols="50"></textarea>
-                    <br>
-                    <br>
-                    <input type="button" value="Calcular" onclick="codi()">
-                    <br>
-                    <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCodigosWhileResult" readonly>
-                </form>
-                <br>
-                <br>
-            </center>
-        </div>
     </body>
 </html>
