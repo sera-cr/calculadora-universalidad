@@ -10,6 +10,7 @@
             }
             /* Enlaces navbar */
             #navbar a {
+                position: sticky;
                 opacity: 100%;
                 float: left;
                 display: block;
@@ -44,12 +45,10 @@
             <center><h1 name="inicio">Calculadora Universalidad</h1></center>
             <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
             <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga - Enero 2020</i></h3></center>
-            <br>
-            <br>
             <center>
                 <div id="navbar">
-                    <a href="#" id="inicio">Inicio</a>
-                    <a href="#ct2" id="cantorT2">
+                    <a href="#top" id="inicio">Inicio</a>
+                    <a href="#navbar" id="cantorT2">
                         <i>Cantorizaci&oacute;n Tama&ntilde;o 2</i>
                     </a>
                     <a href="#cg" id="cantorG">
@@ -80,11 +79,7 @@
                 <form name="cantorizacionT2">
                     <h2>
                         Codificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">2</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
-                        </span>
+                        &sigma;<sup style="font-size: 60%;">2</sup><sub style="font-size: 60%;">1</sub>
                     </h2>
                     <h3 style="font-weight: normal">Introduce un n&uacute;mero X y un n&uacute;mero Y, ambos mayores o iguales que 0</h3>
                     X:&nbsp;&nbsp;<input type="text" size="8" name="x">&nbsp;&nbsp;&nbsp;
@@ -102,11 +97,7 @@
                 <form name="cantorizacionGeneral">
                     <h2>
                         Codificaci&oacute;n de Cantor Generalizada o <i>cantorizaci&oacute;n</i>, 
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">k+1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">1</sub>
-                        </span>
+                        &sigma;<sup style="font-size: 60%;">k+1</sup><sub style="font-size: 60%;">1</sub>
                     </h2>
                     <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios</h3>
                     <i><b>Ejemplo: </b>1;2;3;4</i>
@@ -126,16 +117,8 @@
                 <form name="decantorizacionT2">
                     <h2>
                         Decodificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>decantorizaci&oacute;n de tama&ntilde;o dos</i>, 
-                        (&sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,1</sub>
-                        </span>&nbsp;&nbsp;,
-                        &sigma; 
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">2,2</sub>
-                        </span>&nbsp;&nbsp;)
+                        (&sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">2,1</sub>,
+                        &sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">2,2</sub>)
                     </h2>
                     <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0</h3>
                     N&uacute;mero:&nbsp;&nbsp;<input type="text" size="8" name="n">
@@ -152,25 +135,13 @@
                 <form name="decantorizacionGeneral">
                     <h2>
                         Decodificaci&oacute;n de Cantor Generalizada o <i>decantorizaci&oacute;n</i>, 
-                        (&sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,i</sub>
-                        </span>&nbsp;&nbsp;&nbsp;, . . . , 
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; font-size: 13px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; font-size: 13px;">k+1,k+1</sub>
-                        </span>&nbsp;&nbsp;&nbsp;&nbsp;)
+                        (&sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">k+1,i</sub>, . . . , 
+                        &sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">k+1,k+1</sub>)
                     </h2>
                     <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0, y el valor de k tambi&eacute;n mayor que 0</h3>
                     <i style="font-size: 18px">
                         Recuerda que para k = 2 y i=1, la expresi&oacute;n quedar&iacute;a como:
-                        &sigma;
-                        <span class="supsub" style="position: absolute;">
-                            <sup class="superscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px">1</sup>
-                            <sub class="subscript" style="display: block; position: relative; left: 2px; top: -2px; font-size: 11px;">3,1</sub>
-                        </span>
+                        &sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">3,1</sub>
                     </i>
                     <br>
                     <br>
