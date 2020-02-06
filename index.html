@@ -61,6 +61,15 @@
             <center><h2 style="font-weight:normal">Teor&iacute;a de Aut&oacute;matas y Lenguajes Formales</h2></center>
             <center><h3 style="font-weight:normal"><i>Seraf&iacute;n Cort&eacute;s Ram&iacute;rez - Universidad de M&aacute;laga - Enero 2020</i></h3></center>
             <center>
+                <h2>ATENCI&Oacute;N:</h2>
+                <h3 style="font-weight: normal;">
+                    Esta calculadora utiliza el tipo de datos BigInt.<br>
+                    Si utilizas navegadores Edge, Internet Explorer o Safari, 
+                    seguramente no funcionen los c&aacute;lculos debido a que BigInt no se encuentra implementado en estos navegadores.
+                </h3>
+            </center>
+            <br>
+            <center>
                 <div id="ct2"></div>
                 <div id="navbar">
                     <a href="#top" id="inicio">Inicio</a>
@@ -105,7 +114,6 @@
                     </a>
                 </div>
                 <div id="ct2"></div> <!-- salto antes de cantorizacion t2-->
-                <br>
                 <br>
                 <form name="cantorizacionT2">
                     <h2>
@@ -284,6 +292,14 @@
             </center>
         </div>
         <script>
+            /*
+             * Esta calculadora utiliza la conversion al tipo de datos BigInt
+             * Un tipo de datos ahora nativo en JavaScript desde el 2 de diciembre del 2018, fuente: https://github.com/peterolson/BigInteger.js/tree/master
+             * Por lo que, en los navegadores Edge, Internet Explorer y Safari es posible que no funcionen las funciones que se encuentran en esta calculadora
+             * En Android, funciona en todos los navegadores menos en Safari.
+             * Otro problema de usar el tipo BigInt, es que como tipo de dato entero, la parte decimal es truncada, pero para nuestras funciones no es necesario
+             * Para escribir un numero BigInt, basta con anyadir n al final (por ejemplo 0n) o invocar al constructor (BigInt(0))
+             */
             // funciones para el navbar
             // cuando la pantalla haga scroll, llame a la funcion
             window.onscroll = function() {navbarScroll()};
@@ -322,13 +338,37 @@
                 document.codificacionCodigosWhile.codigo.value = "";
                 document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = "";
             }
+            function pruebaBigInt()
+            {
+                var noBigInt = Number.MAX_SAFE_INTEGER;
+                var bigInt = BigInt(noBigInt)+1n;
+                return "no big int: " + noBigInt + " bitInt " + bigInt;
+            }
+            // raiz cuadrada con BigInt
+            function sqrtBI(value)
+            {
+                if (value < 0n) {
+                    throw "no es posible la raiz de 0";
+                }
+                if (value < 2n) {
+                    return value;
+                }
+                function newtonIteration(n, x0) {
+                    const x1 = ((n / x0) + x0) >> 1n;
+                    if (x0 === x1 || x0 === (x1 - 1n)) {
+                        return x0;
+                    }
+                    return newtonIteration(n, x1);
+                }
+                return newtonIteration(value, 1n);
+            }
             // funcion cantorizacion tamanyo dos
             // N^2 -> N
             function cantorizacionTam2()
             {
-                var x = parseInt(document.cantorizacionT2.x.value); 
-                var y = parseInt(document.cantorizacionT2.y.value);
-                if ((!Number.isInteger(x) || x < 0) || (!Number.isInteger(y) || y < 0)) {
+                var x = BigInt(document.cantorizacionT2.x.value); 
+                var y = BigInt(document.cantorizacionT2.y.value);
+                if ((typeof x != 'bigint' || x < 0n) || (typeof y != 'bigint' || y < 0n)) {
                     document.cantorizacionT2.cantorizacionTam2Result.value = "";
                     alert("Error. \nX e Y deben de ser igual o mayores que 0.")
                 } else {
@@ -338,7 +378,7 @@
             // funcion cantorizacion tamanyo dos con return
             function cantorizacionTam2Return(x,y)
             {
-                return (x+y)*(x+y+1)/2+y;
+                return (x+y)*(x+y+1n)/2n+y;
             }
             // funcion cantorizacion generalizada
             // N^(k+1) -> N
@@ -346,22 +386,24 @@
             {
                 var numbers = document.cantorizacionGeneral.numeros.value.split(/[;]/);
                 numbers = leeArray(numbers);
-                numbers.forEach(element => {
-                    if (!Number.isInteger(element) || element < 0) {
+                for (var i = 0; i < numbers.length; i++) {
+                    if ((typeof numbers[i] != 'bigint') || numbers[i] < 0n) {
                         document.cantorizacionGeneral.cantorizacionGResult.value = "";
                         alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
+                        break;
                     }
-                });
+                }
                 var result = cantorizacionGRec(numbers);
                 document.cantorizacionGeneral.cantorizacionGResult.value = result;
             }
             function leeArray(array) {
                 var result = [];
                 for (i = 0; i < array.length; i++) {
-                    var v = parseInt(array[i]);
-                    if (v < 0) {
+                    var v = BigInt(array[i]);
+                    if (v < 0n) {
                         document.cantorizacionGeneral.cantorizacionGResult.value = "";
                         alert("Los numeros introducidos deben de ser naturales.");
+                        break;
                     }
                     result[i] = v;
                 }
@@ -384,8 +426,8 @@
             // N -> N
             function decantorizacionTam2()
             {
-                var numero = parseInt(document.decantorizacionT2.n.value);
-                if (!Number.isInteger(numero) || numero < 0) {
+                var numero = BigInt(document.decantorizacionT2.n.value);
+                if (typeof numero != 'bigint' || numero < 0n) {
                     document.decantorizacionT2.decantorizacionTam2Result.value = "";
                     alert("Error. \nEl numero tiene que ser mayor o igual que 0.")
                 } else {
@@ -406,21 +448,21 @@
 
             function decantorizacionTam2SegComp(n)
             {
-                return n - cantorizacionTam2Return(diagonal(n),0);
+                return n - cantorizacionTam2Return(diagonal(n),0n);
             }
             // funcion diagonal o d(z) siendo z nuestro numero
             // calculado aritmeticamente
             function diagonal(n)
             {
-                return Math.trunc((Math.sqrt(8*n+1)-1)/2);
+                return (sqrtBI(8n * n + 1n) - 1n) / 2n; // BigInt ya realiza truncado de parte decimal
             }
             // funcion decantorizacion generalizada
             // N -> N
             function decantorizacionG()
             {
-                var n = parseInt(document.decantorizacionGeneral.n.value);
-                var kp1 = parseInt(document.decantorizacionGeneral.k.value)+1;
-                if ((!Number.isInteger(n) || n < 0 ) ||(!Number.isInteger(kp1) || kp1 < 0)) {
+                var n = BigInt(document.decantorizacionGeneral.n.value);
+                var kp1 = BigInt(document.decantorizacionGeneral.k.value)+1n;
+                if ((typeof n != 'bigint' || n < 0n ) ||(typeof kp1 != 'bigint' || kp1 < 0n)) {
                     document.decantorizacionGeneral.decantorizacionGResult.value = "";
                     alert("Error. \nEl numero y k tienen que ser mayor o igual que 0.")
                 } else {
@@ -433,7 +475,7 @@
             {
                 var result = [];
                 result.unshift(")");
-                for (var i = kp1; i >= 1; i--) {
+                for (var i = kp1; i >= 1n; i--) {
                     result.unshift(decantorizacionGRec(n,kp1,i));
                     result.unshift(",");
                 }
@@ -444,12 +486,12 @@
             // funcion decantorizacion generalizada recursiva
             function decantorizacionGRec(n,kp1,i)
             {
-                if (kp1 == 1) {
+                if (kp1 == 1n) {
                     return n;
-                } else if (i == 1) {
+                } else if (i == 1n) {
                     return decantorizacionTam2PrimComp(n);
                 } else {
-                    return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1,i-1)
+                    return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1n,i-1n)
                 }
             }
             // funcion L(x) -> anexo 3 de godel es array.length
@@ -458,47 +500,47 @@
             function godelizacion()
             {
                 var error = false;
-                var numbers = document.codificacionGodel.numeros.value.split(/[;]/);
-                numbers.forEach(element => {
-                    if (!Number.isInteger(element) || element < 0) {
+                var numbers = leeArray(document.codificacionGodel.numeros.value.split(/[;]/));
+                for (var i = 0; i < numbers.length; i++) {
+                    if (typeof numbers[i] != 'bigint' || numbers[i] < 0n) {
                         error = true;
                         document.codificacionGodel.codificacionGodelResult.value = "";        
                         alert("Error. \nUno de los valores introducidos no es valido.");
+                        break;
                     }
-                });
+                }
                 if (!error) document.codificacionGodel.codificacionGodelResult.value = godelizacionReturn(numbers);
             }
             // funcion godelizacion return
             function godelizacionReturn(array)
             {
-                var result = 0;
-                var numbers = leeArray(array);
-                if (numbers.length != 0) {
-                    result = cantorizacionTam2Return(numbers.length-1,cantorizacionGRec(numbers))+1;
+                var result = 0n;
+                if (array.length != 0) {
+                    result = cantorizacionTam2Return(BigInt(array.length-1),cantorizacionGRec(array))+1n;
                 }
                 return result;
             }
             // funcion longitud (dado un z)
             function longitud(z)
             {
-                if (z == 0) {
-                    return 0;
+                if (z == 0n) {
+                    return 0n;
                 } else {
-                    return decantorizacionTam2PrimComp(z-1)+1;
+                    return decantorizacionTam2PrimComp(z-1n)+1n;
                 }
             }
             // funcion degodelizacion
             // N^2 -> N
             function degodelizacion()
             {
-                var z = document.decodificacionGodel.n.value;
-                if (!Number.isInteger(z) || z < 0) {
+                var z = BigInt(document.decodificacionGodel.n.value);
+                if (typeof z != 'bigint' || z < 0n) {
                     document.decodificacionGodel.decodificacionGodelResult.value = "";
                     alert("Error. \nEl valor introducido no es valido.");
                 } else {
                     var result = [];
                     result.unshift(")");
-                    for (var k = longitud(z); k >= 1; k--) {
+                    for (var k = longitud(z); k >= 1n; k--) {
                         result.unshift(degodelizacionReturn(z,k));
                         result.unshift(",");
                     }
@@ -510,10 +552,10 @@
             // funcion degodelizacion con return
             function degodelizacionReturn(z,k)
             {
-                if (z == 0 || k > longitud(z)) {
-                    return 0;
+                if (z == 0n || k > longitud(z)) {
+                    return 0n;
                 } else {
-                    return decantorizacionGRec(decantorizacionTam2SegComp(z-1),longitud(z),k);
+                    return decantorizacionGRec(decantorizacionTam2SegComp(z-1n),longitud(z),k);
                 }
             }
             // funcion codi de codificacion de sentencias while
@@ -522,7 +564,7 @@
             {
                 var arrayLinea = tratarLinea(document.codificacionSentenciasWhile.sentencia.value);
                 var result = codiReturn(arrayLinea);
-                if (Number.isInteger(result)) {
+                if (typeof result == 'bigint') {
                     document.codificacionSentenciasWhile.codificacionSentenciasWhileResult.value = result;
                 } else {
                     alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
@@ -536,31 +578,31 @@
                     if (arrayLinea[1] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
-                        return 5*(arrayLinea[1]-1);
+                        return 5n*(BigInt(arrayLinea[1]-1));
                     }
                 } else if (arrayLinea.length == 7) {
                     if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
-                        return 5*cantorizacionTam2Return(arrayLinea[1]-1,arrayLinea[5]-1)+1;
+                        return 5n*cantorizacionTam2Return(BigInt(arrayLinea[1]-1),BigInt(arrayLinea[5]-1))+1n;
                     }
                 } else if (arrayLinea.length == 9 && arrayLinea[6] == '+') {
-                    if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0) {
-                        return null; // indice de variable negativo o 0
+                    if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0 || arrayLinea[7] != 1) {
+                        return null; // indice de variable negativo o 0 o sentencia no valida (no se esta sumando 1)
                     } else {
-                        return 5*cantorizacionTam2Return(arrayLinea[1]-1,arrayLinea[5]-1)+2;
+                        return 5n*cantorizacionTam2Return(BigInt(arrayLinea[1]-1),BigInt(arrayLinea[5]-1))+2n;
                     }
                 } else if (arrayLinea.length == 9 && arrayLinea[6] == '-') {
-                    if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0) {
-                        return null; // indice de variable negativo o 0
+                    if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0 || arrayLinea[7] != 1) {
+                        return null; // indice de variable negativo o 0 o sentencia no valida (no se esta restando 1)
                     } else {
-                        return 5*cantorizacionTam2Return(arrayLinea[1]-1,arrayLinea[5]-1)+3;
+                        return 5n*cantorizacionTam2Return(BigInt(arrayLinea[1]-1),BigInt(arrayLinea[5]-1))+3n;
                     }
                 } else if (arrayLinea.slice(0,5).join("") == "while") {
                     if (arrayLinea[6] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
-                        return 5*cantorizacionTam2Return(arrayLinea[6]-1,CodiReturn(arrayLinea.slice(12,arrayLinea.length-2)))+4;
+                        return 5n*cantorizacionTam2Return(BigInt(arrayLinea[6]-1),CodiReturn(arrayLinea.slice(12,arrayLinea.length-2)))+4n;
                     }
                 } else { // se ha escrito cualquier otra cosa
                     return null;
@@ -579,7 +621,7 @@
                 for (var i = 0; i < lineas.length; i++) {
                     result[i] = codiReturn(tratarLinea(lineas[i]));
                 }
-                return godelizacionReturn(result)-1;
+                return godelizacionReturn(result)-1n;
             }
             function separarSentencias(arrayLineas)
             {
