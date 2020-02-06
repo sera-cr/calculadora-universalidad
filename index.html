@@ -109,7 +109,7 @@
                     <a href="" id="DECODI">
                         <i>DECODI</i>
                     </a>
-                    <a href="" onclick="limpiarCampos()" id="limpiar">
+                    <a href ="" onclick="limpiarCampos()" id="limpiar">
                         <i>Limpiar Campos</i>
                     </a>
                 </div>
@@ -283,7 +283,7 @@
                     <textarea name="codigo" rows="4" cols="50"></textarea>
                     <br>
                     <br>
-                    <input type="button" value="Calcular" onclick="codi()">
+                    <input type="button" value="Calcular" onclick="Codi()">
                     <br>
                     <br>
                     Resultado:&nbsp;&nbsp;<input type="text" size="8" name="codificacionCodigosWhileResult" readonly>
@@ -603,7 +603,7 @@
                     if (arrayLinea[6] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
-                        return 5n*cantorizacionTam2Return(BigInt(arrayLinea[6]-1),CodiReturn(arrayLinea.slice(12,arrayLinea.length-2)))+4n;
+                        return 5n*cantorizacionTam2Return(BigInt(arrayLinea[6]-1),CodiReturn(arrayLinea.slice(12,arrayLinea.length)))+4n;
                     }
                 } else { // se ha escrito cualquier otra cosa
                     return null;
@@ -626,7 +626,7 @@
             }
             function separarSentencias(arrayLineas)
             {
-                var result = arrayLineas.join('').replace(/;/gi, ";,").split(/\,/);
+                var result = arrayLineas.join('').replace(/;/gi, ";,").split(",");
                 result.pop(); // eliminamos el ultimo elemento generado por el ultimo ;
                 return result;
             }
@@ -635,7 +635,7 @@
             {
                 var arrayLineas = tratarLinea(document.codificacionCodigosWhile.codigo.value);
                 var result = CodiReturn(arrayLineas);
-                if (Number.isInteger(result)) {
+                if (typeof result == 'bigint') {
                     document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = result;
                 } else {
                     alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
