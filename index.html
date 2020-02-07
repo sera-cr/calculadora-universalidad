@@ -104,9 +104,9 @@
                         <i>decodi</i>
                     </a>
                     <a href="#DeCodi" id="decoDeCodi">
-                        <i>Decodi</i>
+                        <i>DeCodi</i>
                     </a>
-                    <a href="" id="DECODI">
+                    <a href="#DECODI" id="decoDECODI">
                         <i>DECODI</i>
                     </a>
                     <a href ="" onclick="limpiarCampos()" id="limpiar">
@@ -330,14 +330,17 @@
                     <input type="button" value="Calcular" onclick="decodi()">
                     <br>
                     <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="60" name="decodificacionSentenciasWhileResult" readonly>
+                    Resultado:
+                    <br>
+                    <br>
+                    <textarea name="decodificacionSentenciasWhileResult" rows="4" cols="50" readonly></textarea>
                 </form>
                 <div id="DeCodi"></div>
                 <br>
                 <br>
                 <form name="decodificacionCodigosWhile">
                     <h2>
-                        Decodificaci&oacute;n de sentencias While o <i>decodi</i>
+                        Decodificaci&oacute;n de c&oacute;digos While o <i>DeCodi</i>
                     </h2>
                     <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0.</h3>
                     N&uacute;mero:&nbsp;&nbsp;<input type="text" size="60" name="n">
@@ -346,8 +349,35 @@
                     <input type="button" value="Calcular" onclick="DeCodi()">
                     <br>
                     <br>
-                    Resultado:&nbsp;&nbsp;<input type="text" size="60" name="decodificacionCodigosWhileResult" readonly>
+                    Resultado:
+                    <br>
+                    <br>
+                    <textarea name="decodificacionCodigosWhileResult" rows="4" cols="50" readonly></textarea>
                 </form>
+                <div id="DECODI"></div>
+                <br>
+                <br>
+                <form name="decodificacionProgramasWhile">
+                    <h2>
+                        Decodificaci&oacute;n de programas While o <i>DECODI</i>
+                    </h2>
+                    <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0.</h3>
+                    N&uacute;mero:&nbsp;&nbsp;<input type="text" size="60" name="numero">
+                    <br>
+                    <br>
+                    <input type="button" value="Calcular" onclick="DECODI()">
+                    <br>
+                    <br>
+                    Resultado:
+                    <br>
+                    <br>
+                    n:&nbsp;&nbsp;<input type="text" size="60" name="n" readonly><br><br>
+                    p:&nbsp;&nbsp;<input type="text" size="60" name="p" readonly><br><br>
+                    C&oacute;digo While:<br><br>
+                    <textarea name="decodificacionProgramasWhileResult" rows="4" cols="50" readonly></textarea>
+                </form>
+                <br>
+                <br>
             </center>
         </div>
         <script>
@@ -828,12 +858,39 @@
                     } else if (tipo(z) == 3) {
                         result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "-1";
                     } else {
-                        result = -2;
+                        result = "while X" + extraer(z,1) + " !=0 do \n" + DeCodiReturn(extraer(z,2)-1n) + "od";
                     }
                     return result;
                 }
             }
-
+            // funcion decodificacion de codigos While
+            // DeCodi: N -> Cod_While
+            function DeCodi()
+            {
+                var z = BigInt(document.decodificacionCodigosWhile.n.value);
+                document.decodificacionCodigosWhile.decodificacionCodigosWhileResult.value = DeCodiReturn(z);
+                
+            }
+            // funcion DeCodi con return
+            function DeCodiReturn(z)
+            {
+                var result = "";
+                for (var i = 1n; i < longitud(z); i++) {
+                    result += (decodiReturn(degodelizacionReturn(z+1n,i)));
+                    result += "\n";
+                }
+                return result; // eliminamos el ultimo \n introducido
+            }
+            // funcion decodificacion de programas While
+            // DECODI: N -> WHILE
+            function DECODI()
+            {
+                var z = BigInt(document.decodificacionProgramasWhile.numero.value);
+                var result = null;
+                document.decodificacionProgramasWhile.p.value = result[0];
+                document.decodificacionProgramasWhile.n.value = result[1];
+                document.decodificacionProgramasWhile.p.value = result[2];
+            }
         </script>
     </body>
 </html>
