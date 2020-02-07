@@ -874,22 +874,39 @@
             // funcion DeCodi con return
             function DeCodiReturn(z)
             {
-                var result = "";
+                if (typeof z != 'bigint') {
+                    alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
+                } else {
+                    var result = "";
                 for (var i = 1n; i < longitud(z); i++) {
                     result += (decodiReturn(degodelizacionReturn(z+1n,i)));
                     result += "\n";
                 }
-                return result; // eliminamos el ultimo \n introducido
+                return result;
+                }
             }
             // funcion decodificacion de programas While
             // DECODI: N -> WHILE
             function DECODI()
             {
                 var z = BigInt(document.decodificacionProgramasWhile.numero.value);
-                var result = null;
-                document.decodificacionProgramasWhile.p.value = result[0];
-                document.decodificacionProgramasWhile.n.value = result[1];
-                document.decodificacionProgramasWhile.p.value = result[2];
+                var result = DECODIReturn(z);
+                document.decodificacionProgramasWhile.n.value = result[0];
+                document.decodificacionProgramasWhile.p.value = result[1];
+                document.decodificacionProgramasWhile.decodificacionProgramasWhileResult.value = result[2];
+            }
+            // funcion DECODI con return
+            function DECODIReturn(z)
+            {
+                if (typeof z != 'bigint') {
+                    alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
+                } else {
+                    var result = [];
+                    result[0] = decantorizacionGRec(z,3n,1n);
+                    result[1] = decantorizacionGRec(z,3n,2n) + mayorQue(decantorizacionGRec(z,3n,1n),mayorIndiceCodigo(tratarLinea(DeCodiReturn(decantorizacionGRec(z,3n,3n)))));
+                    result[2] = DeCodiReturn(decantorizacionGRec(z,3n,3n));
+                }
+                return result;
             }
         </script>
     </body>
