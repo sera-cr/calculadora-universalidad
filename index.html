@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+    <!-- Serafín Cortés Ramírez
+         Universidad de Málaga
+         Teoría de Autómatas y Lenguajes Formales
+         Enero 2020 
+         https://github.com/Shafledome/calculadora-universalidad -->
     <head>
         <title>Calculadora Universalidad - TALF</title>
         <style>
@@ -396,7 +401,7 @@
             var navbar = document.getElementById("navbar");
             // obtiene el offset del navbar
             var sticky = navbar.offsetTop;
-            // funcion sticky
+            // funcion sticky para el desplazamiento del navbar
             function navbarScroll()
             {
                 if (window.pageYOffset >= sticky) {
@@ -427,21 +432,18 @@
                 document.codificacionCodigosWhile.codigo.value = "";
                 document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = "";
             }
-            function pruebaBigInt()
-            {
-                var noBigInt = Number.MAX_SAFE_INTEGER;
-                var bigInt = BigInt(noBigInt)+1n;
-                return "no big int: " + noBigInt + " bitInt " + bigInt;
-            }
-            // raiz cuadrada con BigInt
+            // calculo de una raiz cuadrada con BigInt
             function sqrtBI(value)
             {
-                if (value < 0n) {
+                if (value < 0n) { // si el valor es menor que 0
                     throw "no es posible la raiz de 0";
                 }
-                if (value < 2n) {
+                if (value < 2n) { // si la raiz es 1
                     return value;
                 }
+                // metodo de newton para la el calculo de la raiz cuadrada
+                // metodo de newton https://es.wikipedia.org/wiki/M%C3%A9todo_de_Newton
+                // https://golb.hplar.ch/2018/09/javascript-bigint.html
                 function newtonIteration(n, x0) {
                     const x1 = ((n / x0) + x0) >> 1n;
                     if (x0 === x1 || x0 === (x1 - 1n)) {
@@ -455,36 +457,37 @@
             // N^2 -> N
             function cantorizacionTam2()
             {
-                var x = BigInt(document.cantorizacionT2.x.value); 
-                var y = BigInt(document.cantorizacionT2.y.value);
-                if ((typeof x != 'bigint' || x < 0n) || (typeof y != 'bigint' || y < 0n)) {
+                var x = BigInt(document.cantorizacionT2.x.value); // valor x recogido del formulario html
+                var y = BigInt(document.cantorizacionT2.y.value); // valor y recogido del formulario html
+                if ((typeof x != 'bigint' || x < 0n) || (typeof y != 'bigint' || y < 0n)) { // si no se ha introducido un numero, x o y no sera de tipo bigint, luego error
                     document.cantorizacionT2.cantorizacionTam2Result.value = "";
                     alert("Error. \nX e Y deben de ser igual o mayores que 0.")
                 } else {
-                    document.cantorizacionT2.cantorizacionTam2Result.value = cantorizacionTam2Return(x,y);
+                    document.cantorizacionT2.cantorizacionTam2Result.value = cantorizacionTam2Return(x,y); // llamamos a la funcion que realiza los calculos
                 }
             }
             // funcion cantorizacion tamanyo dos con return
             function cantorizacionTam2Return(x,y)
             {
-                return (x+y)*(x+y+1n)/2n+y;
+                return (x+y)*(x+y+1n)/2n+y; // formula cantorizacion tamanyo dos
             }
             // funcion cantorizacion generalizada
             // N^(k+1) -> N
             function cantorizacionG()
             {
-                var numbers = document.cantorizacionGeneral.numeros.value.split(/[;]/);
-                numbers = leeArray(numbers);
-                for (var i = 0; i < numbers.length; i++) {
+                var numbers = document.cantorizacionGeneral.numeros.value.split(/[;]/); // cogemos el texto escrito en el textarea html y hacemos un array con cada numero separado por ;
+                numbers = leeArray(numbers); // funcion que convierte todos los elementos del array a bigint
+                for (var i = 0; i < numbers.length; i++) { // si los elementos introducidos no son numeros ya convertidos a bigint, entonces error
                     if ((typeof numbers[i] != 'bigint') || numbers[i] < 0n) {
                         document.cantorizacionGeneral.cantorizacionGResult.value = "";
                         alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
                         break;
                     }
                 }
-                var result = cantorizacionGRec(numbers);
+                var result = cantorizacionGRec(numbers); // llamamos a la funcion recursiva que calcula la cantorizacion general
                 document.cantorizacionGeneral.cantorizacionGResult.value = result;
             }
+            // funcion que convierte todos los elementos del array a bigint
             function leeArray(array) {
                 var result = [];
                 for (i = 0; i < array.length; i++) {
@@ -501,110 +504,113 @@
             // funcion cantorizacion generalizada recursiva
             function cantorizacionGRec(nums)
             {
-                if (nums.length == 1) {
+                if (nums.length == 1) { // caso base para 1 elemento
                     return nums[0];
-                } else if (nums.length == 2) {
+                } else if (nums.length == 2) { // caso base para 2 elementos
                     return cantorizacionTam2Return(nums[0],nums[1]);
                 } else {
                     var n0 = nums[0];
-                    nums.shift();
-                    return cantorizacionTam2Return(n0,cantorizacionGRec(nums));
+                    nums.shift(); // eliminamos el primer elemento del array, que previamente lo hemos almacenado en n0
+                    return cantorizacionTam2Return(n0,cantorizacionGRec(nums)); // calculo de forma recursiva
                 }
             }
             // funcion decantorizacion tamanyo dos
-            // N -> N
+            // N -> N^2
             function decantorizacionTam2()
             {
-                var numero = BigInt(document.decantorizacionT2.n.value);
-                if (typeof numero != 'bigint' || numero < 0n) {
+                var numero = BigInt(document.decantorizacionT2.n.value); // numero natural recogido del formulario html
+                if (typeof numero != 'bigint' || numero < 0n) { // si hemos recibido un elemento que no es un numero, entonces este no habra sido convertido a bigint, error
                     document.decantorizacionT2.decantorizacionTam2Result.value = "";
                     alert("Error. \nEl numero tiene que ser mayor o igual que 0.")
                 } else {
-                    document.decantorizacionT2.decantorizacionTam2Result.value = decantorizacionTam2Return(numero);
+                    document.decantorizacionT2.decantorizacionTam2Result.value = decantorizacionTam2Return(numero); // llamamos a la funcion que calcula la decantorizacion de tamanyo dos
                 }
             }
             // funcion decantorizacion tamanyo dos con return
             function decantorizacionTam2Return(n)
             {
-                return "(" + decantorizacionTam2PrimComp(n) + "," + decantorizacionTam2SegComp(n) + ")";
+                return "(" + decantorizacionTam2PrimComp(n) + "," + decantorizacionTam2SegComp(n) + ")"; // llamamos al calculo de cada componente (primera y segunda) de la decantorizacion
             }
             // funcion decantorizacion tamanyo 2 primera componente
+            // N -> N
             function decantorizacionTam2PrimComp(n)
             {
-                return diagonal(n) - decantorizacionTam2SegComp(n);
+                return diagonal(n) - decantorizacionTam2SegComp(n); // calculo de la decantorizacion de tamanyo 2 de la segunda componente
             }
             // funcion decantorizacion tamanyo 2 segunda componente
-
+            // N -> N
             function decantorizacionTam2SegComp(n)
             {
-                return n - cantorizacionTam2Return(diagonal(n),0n);
+                return n - cantorizacionTam2Return(diagonal(n),0n); // calculo de la decantorizacion de tamanyo 2 de la primera componente
             }
             // funcion diagonal o d(z) siendo z nuestro numero
             // calculado aritmeticamente
             function diagonal(n)
             {
-                return (sqrtBI(8n * n + 1n) - 1n) / 2n; // BigInt ya realiza truncado de parte decimal
+                return (sqrtBI(8n * n + 1n) - 1n) / 2n; // Calculo de la funcion diagonal. BigInt ya realiza truncado de parte decimal
             }
             // funcion decantorizacion generalizada
-            // N -> N
+            // N -> N^k+1
             function decantorizacionG()
             {
-                var n = BigInt(document.decantorizacionGeneral.n.value);
-                var kp1 = BigInt(document.decantorizacionGeneral.k.value)+1n;
-                if ((typeof n != 'bigint' || n < 0n ) ||(typeof kp1 != 'bigint' || kp1 < 0n)) {
+                var n = BigInt(document.decantorizacionGeneral.n.value); // numero al que se va a decantorizar
+                var kp1 = BigInt(document.decantorizacionGeneral.k.value)+1n; // el usuario introduce el valor de k, puesto que la decantorizacion es en k+1, por ello sumamos uno
+                if ((typeof n != 'bigint' || n < 0n ) ||(typeof kp1 != 'bigint' || kp1 < 0n)) { // comprobamos que tenemos un numero convertido a bigint, sino error
                     document.decantorizacionGeneral.decantorizacionGResult.value = "";
                     alert("Error. \nEl numero y k tienen que ser mayor o igual que 0.")
                 } else {
-                    var result = decantorizacionGReturn(n,kp1);
-                    document.decantorizacionGeneral.decantorizacionGResult.value = result.join('');
+                    var result = decantorizacionGReturn(n,kp1); // llamamos a la funcion que nos realiza la composicion de la funcion
+                    document.decantorizacionGeneral.decantorizacionGResult.value = result.join(''); // la funcion anterior devuelve un array, con join juntamos los elementos a un unico String
                 }
             }
             // funcion decantorizacion generalizada return
             function decantorizacionGReturn(n,kp1)
             {
                 var result = [];
-                result.unshift(")");
+                result.unshift(")"); // por comodidad, empezamos a rellenar nuestra solucion desde el final, calculando primero la k+1-esima componente de la decantorizacion
                 for (var i = kp1; i >= 1n; i--) {
-                    result.unshift(decantorizacionGRec(n,kp1,i));
+                    result.unshift(decantorizacionGRec(n,kp1,i)); // funcion que realiza el calculo de cada componente recursivamente
                     result.unshift(",");
                 }
-                result.shift();
+                result.shift(); // tras haber anyadido la primera componente, eliminamos la ultima coma introducida, y anyadimos un parentesis
                 result.unshift("(");
                 return result;
             }
             // funcion decantorizacion generalizada recursiva
             function decantorizacionGRec(n,kp1,i)
             {
-                if (kp1 == 1n) {
+                if (kp1 == 1n) { // caso base, si se trata de una decantorizacion de sigma^1 1,1 (N -> N)
                     return n;
-                } else if (i == 1n) {
+                } else if (i == 1n) { // caso base, si se trata de la primera componente
                     return decantorizacionTam2PrimComp(n);
                 } else {
-                    return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1n,i-1n)
+                    return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1n,i-1n) // calculo recursivo
                 }
             }
-            // funcion L(x) -> anexo 3 de godel es array.length
+            // funcion L(x) -> del anexo 3 Codificacion de Godel, del libro: Teoría de Autómatas y Lenguajes Formales, Gonzalo Ramos Jimenez & Rafael Morales Bueno (2011)
+            // nuestra funcion L(x) la calculamos como array.length
             // funcion godelizacion
             // N^* -> N
             function godelizacion()
             {
-                var error = false;
-                var numbers = leeArray(document.codificacionGodel.numeros.value.split(/[;]/));
+                var error = false; // si se ha producido un error, no modificamos el campo resultado
+                // cogemos el texto introducido y separamos por cada ';'. Convertimos a bigint los elementos del array resultante
+                var numbers = leeArray(document.codificacionGodel.numeros.value.split(/[;]/)); 
                 for (var i = 0; i < numbers.length; i++) {
-                    if (typeof numbers[i] != 'bigint' || numbers[i] < 0n) {
+                    if (typeof numbers[i] != 'bigint' || numbers[i] < 0n) { // Comprobamos que todos los elementos introducidos sean validos, sino error
                         error = true;
                         document.codificacionGodel.codificacionGodelResult.value = "";        
                         alert("Error. \nUno de los valores introducidos no es valido.");
                         break;
                     }
                 }
-                if (!error) document.codificacionGodel.codificacionGodelResult.value = godelizacionReturn(numbers);
+                if (!error) document.codificacionGodel.codificacionGodelResult.value = godelizacionReturn(numbers); // si no se ha producido error, llamamos a la funcion que realiza el calculo
             }
             // funcion godelizacion return
             function godelizacionReturn(array)
             {
                 var result = 0n;
-                if (array.length != 0) {
+                if (array.length != 0) { // si el array no es de tamanyo 0, hacemos su calculo usando funciones anteriores
                     result = cantorizacionTam2Return(BigInt(array.length-1),cantorizacionGRec(array))+1n;
                 }
                 return result;
@@ -612,82 +618,83 @@
             // funcion longitud (dado un z)
             function longitud(z)
             {
-                if (z == 0n) {
+                if (z == 0n) { // caso base, si z es 0
                     return 0n;
                 } else {
-                    return decantorizacionTam2PrimComp(z-1n)+1n;
+                    return decantorizacionTam2PrimComp(z-1n)+1n; // calculo de la funcion
                 }
             }
             // funcion degodelizacion
             // N^2 -> N
             function degodelizacion()
             {
-                var z = BigInt(document.decodificacionGodel.n.value);
-                if (typeof z != 'bigint' || z < 0n) {
+                var z = BigInt(document.decodificacionGodel.n.value); // cogemos el valor a degodelizar y lo convertimos a bigint
+                if (typeof z != 'bigint' || z < 0n) { // si no se ha introducido un numero, error
                     document.decodificacionGodel.decodificacionGodelResult.value = "";
-                    alert("Error. \nEl valor introducido no es valido.");
+                    alert("Error. \nEl valor introducido no es valido."); 
                 } else {
                     var result = [];
-                    result.unshift(")");
+                    result.unshift(")"); // por comodidad, empezamos a componer la solucion desde el elemento longitud(z)-esimo hasta el primer elemento
                     for (var k = longitud(z); k >= 1n; k--) {
-                        result.unshift(degodelizacionReturn(z,k));
+                        result.unshift(degodelizacionReturn(z,k)); // llamamos a la funcion que realiza el calculo
                         result.unshift(",");
                     }
-                    result.shift();
+                    result.shift(); // eliminamos la ultima coma introducida y anyadimos un parentesis
                     result.unshift("(");
-                    document.decodificacionGodel.decodificacionGodelResult.value = result.join('');
+                    document.decodificacionGodel.decodificacionGodelResult.value = result.join(''); // juntamos todos los elementos del array solucion en un unico String
                 }
             }
             // funcion degodelizacion con return
             function degodelizacionReturn(z,k)
             {
-                if (z == 0n || k > longitud(z)) {
+                if (z == 0n || k > longitud(z)) { // caso base si z es 0, o su longitud es 0
                     return 0n;
                 } else {
-                    return decantorizacionGRec(decantorizacionTam2SegComp(z-1n),longitud(z),k);
+                    return decantorizacionGRec(decantorizacionTam2SegComp(z-1n),longitud(z),k); // calculo de la funcion
                 }
             }
             // funcion codi de codificacion de sentencias while
             // Cod_While -> N
             function codi()
             {
+                // cogemos todo el texto del textarea HTML y separamos cada caracter en un array, eliminando los posibles espacios, saltos de linea, etc
                 var arrayLinea = tratarLinea(document.codificacionSentenciasWhile.sentencia.value);
-                var result = codiReturn(arrayLinea);
+                var result = codiReturn(arrayLinea); // funcion calculo de la solucion
                 if (typeof result == 'bigint') {
-                    document.codificacionSentenciasWhile.codificacionSentenciasWhileResult.value = result;
+                    document.codificacionSentenciasWhile.codificacionSentenciasWhileResult.value = result; // si la solucion es un bigint, es correcta
                 } else {
-                    alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
+                    alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo."); // sino, ha habido un error en la escritura del codigo while
                 }
                 
             }
             // funcion codi con return
             function codiReturn(arrayLinea)
             {
-                if (arrayLinea.length == 6) {
+                if (arrayLinea.length == 6) { // si la sentencia es de tipo 0 (asignacion a 0)
                     if (arrayLinea[1] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
                         return 5n*(BigInt(arrayLinea[1]-1));
                     }
-                } else if (arrayLinea.length == 7) {
+                } else if (arrayLinea.length == 7) { // si la sentencia es de tipo 1 (asignacion a otra variable)
                     if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
                         return 5n*cantorizacionTam2Return(BigInt(arrayLinea[1]-1),BigInt(arrayLinea[5]-1))+1n;
                     }
-                } else if (arrayLinea.length == 9 && arrayLinea[6] == '+') {
+                } else if (arrayLinea.length == 9 && arrayLinea[6] == '+') { // si la sentencia es de tipo 2 (asignacion a otra variable, o si misma, mas 1)
                     if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0 || arrayLinea[7] != 1) {
                         return null; // indice de variable negativo o 0 o sentencia no valida (no se esta sumando 1)
                     } else {
                         return 5n*cantorizacionTam2Return(BigInt(arrayLinea[1]-1),BigInt(arrayLinea[5]-1))+2n;
                     }
-                } else if (arrayLinea.length == 9 && arrayLinea[6] == '-') {
+                } else if (arrayLinea.length == 9 && arrayLinea[6] == '-') { // si la sentencia es de tipo 3 (asignacion a otra variable, o si misma, menos 1)
                     if (arrayLinea[1] <= 0 || arrayLinea[5] <= 0 || arrayLinea[7] != 1) {
                         return null; // indice de variable negativo o 0 o sentencia no valida (no se esta restando 1)
                     } else {
                         return 5n*cantorizacionTam2Return(BigInt(arrayLinea[1]-1),BigInt(arrayLinea[5]-1))+3n;
                     }
-                } else if (arrayLinea.slice(0,5).join("") == "while") {
+                } else if (arrayLinea.slice(0,5).join("") == "while") { // si la sentencia es un bucle while
                     if (arrayLinea[6] <= 0) {
                         return null; // indice de variable negativo o 0
                     } else {
@@ -700,32 +707,53 @@
             // funcion separar sentencia while
             function tratarLinea(linea)
             {
-                return linea.replace(/[\s]/g,'').split('');
+                return linea.replace(/[\s]/g,'').split(''); // elimina los espacios por la cadena vacia, despues separa todos los elementos
             }
             // funcion Codi con return
             function CodiReturn(arrayLineas)
             {
-                var lineas = separarSentencias(arrayLineas);
+                var lineas = separarSentencias(arrayLineas); // en sentencias un array previamente separado en caracter
                 var result = [];
                 for (var i = 0; i < lineas.length; i++) {
-                    result[i] = codiReturn(tratarLinea(lineas[i]));
+                    result[i] = codiReturn(tratarLinea(lineas[i])); // hacemos el calculo de cada sentencia
                 }
-                return godelizacionReturn(result)-1n;
+                return godelizacionReturn(result)-1n; // godelizamos
             }
             function separarSentencias(arrayLineas)
             {
-                var result = arrayLineas.join('').replace(/;/gi, ";,").split(",");
-                result.pop(); // eliminamos el ultimo elemento generado por el ultimo ;
+                var result = [];
+                var j = 0; // siguiente posicion en result en donde guardar la solucion
+                var primerCaracter = 0; // primer caracter de la linea a guardar
+                var dentroWhile = false; // si se encuentra recorriendo un bucle while
+                for (var i = 0; i < arrayLineas.length; i++) {
+                    if (arrayLineas.slice(i,i+5).join("") == "while") { // si el caracter que esta recorriendo y los 4 siguientes son "while"
+                        dentroWhile = true;
+                    }
+                    if (!dentroWhile) {
+                        if (arrayLineas[i] == ';') { // si el caracter en el que se encuentra es un ";"
+                            result[j] = arrayLineas.slice(primerCaracter,i+1).join(""); // guarda todos los caracteres hasta el punto y coma, en forma de String
+                            primerCaracter = i+1; // primer caracter ahora indicara el primer caracter de la siguiente linea
+                            j++; // guardamos en la siguiente posicion de result
+                        }
+                    } else {
+                        if (arrayLineas.slice(i,i+2).join("") == "od") { // si ha terminado el bucle while
+                            result[j] = arrayLineas.slice(primerCaracter,i).join(""); // guardamos como String todo el bucle while y las sentencias dentro del bucle, sin od
+                            primerCaracter = i+1; // primer caracter ahora indicara el primer caracter de la siguiente linea
+                            j++; // guardamos en la siguiente posicion de result
+                            dentroWhile = false; // indicamos que hemos salido del bucle
+                        }
+                    }
+                }
                 return result;
             }
             // funcion Codificacion de codigos
             function Codi()
             {
-                var arrayLineas = tratarLinea(document.codificacionCodigosWhile.codigo.value);
-                var result = CodiReturn(arrayLineas);
-                if (typeof result == 'bigint') {
+                var arrayLineas = tratarLinea(document.codificacionCodigosWhile.codigo.value); // coge todo el codigo y lo separa por caracteres eliminando espacios, saltos de linea, etc
+                var result = CodiReturn(arrayLineas); // llama a la funcion que realiza el calculo
+                if (typeof result == 'bigint') { // si el resultado es bigint, es una solucion
                     document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = result;
-                } else {
+                } else { // sino, es un error
                     alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
                 }
                 
@@ -737,24 +765,24 @@
             // funcion que devuelve el mayor indice de una sentencia
             function mayorIndiceSentencia(arrayLinea)
             {
-                if (arrayLinea.length == 6) {
+                if (arrayLinea.length == 6) { // sentencia de tipo 0
                     var indice = BigInt(arrayLinea[1]);
                     if (typeof indice != 'bigint' || indice <= 0n) { // si no es un numero o es menor o igual que 0
                         return null;
                     } else {
                         return indice;
                     }
-                } else if (arrayLinea.length == 7 || arrayLinea == 9) {
+                } else if (arrayLinea.length == 7 || arrayLinea == 9) { // sentencia de tipo 1, tipo 2 o tipo 3
                     var i1 = BigInt(arrayLinea[1]);
                     var i2 = BigInt(arrayLinea[5]);
-                    if (typeof i1 != 'bigint' || typeof i2 != 'bigint') {
+                    if (typeof i1 != 'bigint' || i1 <= 0n || typeof i2 != 'bigint' || i2 <= 0n) { // si no son numeros los indices o son menores o iguales que 0
                         return null;
                     } else {
                         return mayorQue(i1,i2);
                     }
-                } else if (arrayLinea.slice(0,5).join("") == "while") {
+                } else if (arrayLinea.slice(0,5).join("") == "while") { // sentencia de tipo 4
                     var indice = BigInt(arrayLinea[6]);
-                    if (typeof indice != 'bigint') {
+                    if (typeof indice != 'bigint' || indice <= 0n) { // si no es un numero o es menor o igual que 0
                         return null;
                     } else {
                         return indice;
@@ -766,11 +794,11 @@
             // funcion mayor indice de un codigo
             function mayorIndiceCodigo(arrayLineas)
             {
-                var lineas = separarSentencias(arrayLineas);
+                var lineas = separarSentencias(arrayLineas); // separa un array de caracteres en las diferentes sentencias del codigo while
                 var mayorIndice = 0;
                 var indice = 0;
                 for (var i = 0; i < lineas.length; i++) {
-                    indice = mayorIndiceSentencia(tratarLinea(lineas[i]));
+                    indice = mayorIndiceSentencia(tratarLinea(lineas[i])); // para cada linea, busca el mayor indice de esa sentencia
                     if (indice > mayorIndice) {
                         mayorIndice = indice;
                     }
@@ -781,15 +809,15 @@
             // CODI: WHILE -> N
             function CODI()
             {
-                var n = BigInt(document.codificacionProgramasWhile.n.value);
-                var p = BigInt(document.codificacionProgramasWhile.p.value);
-                var arrayLineas = tratarLinea(document.codificacionProgramasWhile.codigo.value);
-                var mayorIndice = mayorIndiceCodigo(arrayLineas);
-                if (typeof n != 'bigint' || typeof p != 'bigint') {
+                var n = BigInt(document.codificacionProgramasWhile.n.value); // obtiene del formulario html el valor de n
+                var p = BigInt(document.codificacionProgramasWhile.p.value); // obtiene del formulario html el valor de p
+                var arrayLineas = tratarLinea(document.codificacionProgramasWhile.codigo.value); // separa el texto del textarea html en caracteres
+                var mayorIndice = mayorIndiceCodigo(arrayLineas); // busca el mayor indice en el codigo
+                if (typeof n != 'bigint' || n <= 0n || typeof p != 'bigint' || p <= 0n) { // si n o p son menores o iguales que 0, o no validos
                     alert("Error. \np y n deben de ser naturales mayores que 0.");
-                } else if (p < n) {
+                } else if (p < n) { // si p es menor que n
                     alert("Error. \np debe de ser mayor o igual que n");
-                } else if (mayorIndice > p) {
+                } else if (mayorIndice > p) { // si el mayor indice es mayor que el numero total de variables
                     alert("Error. \nEl mayor indice del codigo es mayor que el numero total de variables");
                 } else {
                     var valores = [];
@@ -797,7 +825,7 @@
                     valores[1] = p-(mayorQue(n,mayorIndice));
                     valores[2] = CodiReturn(arrayLineas);
                     var result = cantorizacionGRec(valores);
-                    if (typeof result != 'bigint') {
+                    if (typeof result != 'bigint') { // si el resultado no es de tipo bigint, es un error
                         alert("Error. \nCompruebe los valores n y p, y el codigo while.");
                     } else {
                         document.codificacionProgramasWhile.codificacionProgramasWhileResult.value = result;
@@ -808,27 +836,27 @@
             // tipo: N -> {0,1,2,3,4}
             function tipo(z)
             {
-                if (typeof z != 'bigint') {
+                if (typeof z != 'bigint') { // si z no fuera de tipo bigint
                     return -1;
                 } else {
-                    return z % 5n;
+                    return z % 5n; // calcula la funcion tipo
                 }
             }
             // funcion extraer
             // extr: N x {1,2} -> N
             function extraer(z,i)
             {
-                if (i < 1 || i > 2) {
+                if (i < 1 || i > 2) { // si la variable i fuera menor que 1 o mayor que 2
                     alert("Error. \nEl valor de i (variable deseada) solo puede ser 1 (izquierda) o 2 (derecha).");
-                } else if (typeof z != 'bigint') {
+                } else if (typeof z != 'bigint') { // si z no fuera de tipo bigint
                     alert("Error, \nEl valor del numero debe de ser tipo BigInt");
                 } else {
-                    if (tipo(z) == 0) {
+                    if (tipo(z) == 0) { // caso base, si el tipo de z es 0
                         return 1n+z/5n;
                     } else {
-                        if (i == 1) {
+                        if (i == 1) { // si se busca la variable izquierda
                             return 1n+decantorizacionTam2PrimComp((z-tipo(z))/5n);
-                        } else {
+                        } else { // si se busca la variable derecha
                             return 1n+decantorizacionTam2SegComp((z-tipo(z))/5n);
                         }
                     }
@@ -838,8 +866,8 @@
             // decodi: N -> Cod_While
             function decodi()
             {
-                var z = BigInt(document.decodificacionSentenciasWhile.n.value);
-                var result = decodiReturn(z);
+                var z = BigInt(document.decodificacionSentenciasWhile.n.value); // valor de z convertido a bigint
+                var result = decodiReturn(z); // llama a la funcion que realiza los calculos
                 document.decodificacionSentenciasWhile.decodificacionSentenciasWhileResult.value = result;
             }
             // funcion decodi con return
@@ -849,15 +877,15 @@
                     return -1;
                 } else {
                     var result = null;
-                    if (tipo(z) == 0) {
+                    if (tipo(z) == 0) { // si la sentencia es de tipo 0
                         result = "X" + extraer(z,1) + ":=0;";
-                    } else if (tipo(z) == 1) {
+                    } else if (tipo(z) == 1) { // si la sentencia es de tipo 1
                         result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + ";";
-                    } else if (tipo(z) == 2) {
+                    } else if (tipo(z) == 2) { // si la sentencia es de tipo 2
                         result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "+1;";
-                    } else if (tipo(z) == 3) {
-                        result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "-1";
-                    } else {
+                    } else if (tipo(z) == 3) { // si la sentencia es de tipo 3
+                        result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "-1;";
+                    } else { // si la sentencia es de tipo 4
                         result = "while X" + extraer(z,1) + " !=0 do \n" + DeCodiReturn(extraer(z,2)-1n) + "od";
                     }
                     return result;
@@ -867,20 +895,20 @@
             // DeCodi: N -> Cod_While
             function DeCodi()
             {
-                var z = BigInt(document.decodificacionCodigosWhile.n.value);
-                document.decodificacionCodigosWhile.decodificacionCodigosWhileResult.value = DeCodiReturn(z);
+                var z = BigInt(document.decodificacionCodigosWhile.n.value); // valor de z convertido a bigint
+                document.decodificacionCodigosWhile.decodificacionCodigosWhileResult.value = DeCodiReturn(z); // llama a la funcion que realiza el calculo
                 
             }
             // funcion DeCodi con return
             function DeCodiReturn(z)
             {
-                if (typeof z != 'bigint') {
+                if (typeof z != 'bigint') { // si z no fuera bigint, es un error
                     alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
                 } else {
                     var result = "";
-                for (var i = 1n; i < longitud(z); i++) {
-                    result += (decodiReturn(degodelizacionReturn(z+1n,i)));
-                    result += "\n";
+                    for (var i = 1n; i < longitud(z); i++) { // desde 1 hasta la longitud de z, calculamos las sentencias
+                        result += (decodiReturn(degodelizacionReturn(z+1n,i))); 
+                        result += "\n"; // anyadimos un salto de linea al final
                 }
                 return result;
                 }
@@ -889,8 +917,8 @@
             // DECODI: N -> WHILE
             function DECODI()
             {
-                var z = BigInt(document.decodificacionProgramasWhile.numero.value);
-                var result = DECODIReturn(z);
+                var z = BigInt(document.decodificacionProgramasWhile.numero.value); // obtiene el valor de z y lo convierte a bigint
+                var result = DECODIReturn(z); // llama a la funcion que realiza los calculos y devuelve un array con la solucion
                 document.decodificacionProgramasWhile.n.value = result[0];
                 document.decodificacionProgramasWhile.p.value = result[1];
                 document.decodificacionProgramasWhile.decodificacionProgramasWhileResult.value = result[2];
@@ -898,13 +926,13 @@
             // funcion DECODI con return
             function DECODIReturn(z)
             {
-                if (typeof z != 'bigint') {
+                if (typeof z != 'bigint') { // si z no es de tipo bigint, es un error
                     alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
                 } else {
                     var result = [];
-                    result[0] = decantorizacionGRec(z,3n,1n);
-                    result[1] = decantorizacionGRec(z,3n,2n) + mayorQue(decantorizacionGRec(z,3n,1n),mayorIndiceCodigo(tratarLinea(DeCodiReturn(decantorizacionGRec(z,3n,3n)))));
-                    result[2] = DeCodiReturn(decantorizacionGRec(z,3n,3n));
+                    result[0] = decantorizacionGRec(z,3n,1n); // calcula la primera componente de la solucion
+                    result[1] = decantorizacionGRec(z,3n,2n) + mayorQue(decantorizacionGRec(z,3n,1n),mayorIndiceCodigo(tratarLinea(DeCodiReturn(decantorizacionGRec(z,3n,3n))))); // segunda componente
+                    result[2] = DeCodiReturn(decantorizacionGRec(z,3n,3n)); // calcula la tercera componente de la solucion
                 }
                 return result;
             }
