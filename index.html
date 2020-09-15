@@ -69,8 +69,12 @@
                 <h2>ATENCI&Oacute;N:</h2>
                 <h3 style="font-weight: normal;">
                     Esta calculadora utiliza el tipo de datos BigInt.<br>
-                    Si utilizas navegadores Edge, Internet Explorer o Safari, 
-                    seguramente no funcionen los c&aacute;lculos debido a que BigInt no se encuentra implementado en estos navegadores.
+                    Actualmente la librería BigInt no se encuentra nativamente junto a JavaScript en todos los navegadores web, por lo que si tu navegador no posee esta librería, seguramente
+                    no te funcionen los c&aacute;lculos.
+                </h3>
+                <h3>
+                    Puedes encontrar <a href="https://caniuse.com/bigint">aqu&iacute;</a> los navegadores en los que se encuentra implementado BigInt nativamente, y a partir de qu&eacute; versi&oacute;n.
+                    Compruebalo con la versión de tu navegador.
                 </h3>
             </center>
             <br>
@@ -798,53 +802,6 @@
 
             return Math.max.apply(null, indicesVariables); // devolvemos el mayor
         }
-        /*// funcion mayorQue que devuelve que elemento es mayor
-        function mayorQue(x,y){
-            return (x>y) ? x : y;
-        }
-        // funcion que devuelve el mayor indice de una sentencia
-        function mayorIndiceSentencia(arrayLinea)
-        {
-            if (arrayLinea.length == 6) { // sentencia de tipo 0
-                var indice = BigInt(arrayLinea[1]);
-                if (typeof indice != 'bigint' || indice <= 0n) { // si no es un numero o es menor o igual que 0
-                    return null;
-                } else {
-                    return indice;
-                }
-            } else if (arrayLinea.length == 7 || arrayLinea == 9) { // sentencia de tipo 1, tipo 2 o tipo 3
-                var i1 = BigInt(arrayLinea[1]);
-                var i2 = BigInt(arrayLinea[5]);
-                if (typeof i1 != 'bigint' || i1 <= 0n || typeof i2 != 'bigint' || i2 <= 0n) { // si no son numeros los indices o son menores o iguales que 0
-                    return null;
-                } else {
-                    return mayorQue(i1,i2);
-                }
-            } else if (arrayLinea.slice(0,5).join("") == "while") { // sentencia de tipo 4
-                var indice = BigInt(arrayLinea[6]);
-                if (typeof indice != 'bigint' || indice <= 0n) { // si no es un numero o es menor o igual que 0
-                    return null;
-                } else {
-                    return indice;
-                }
-            } else { // se ha escrito cualquier otra cosa
-                return null;
-            }
-        }
-        // funcion mayor indice de un codigo
-        function mayorIndiceCodigo(arrayLineas)
-        {
-            var lineas = separarSentencias(arrayLineas); // separa un array de caracteres en las diferentes sentencias del codigo while
-            var mayorIndice = 0;
-            var indice = 0;
-            for (var i = 0; i < lineas.length; i++) {
-                indice = mayorIndiceSentencia(tratarLinea(lineas[i])); // para cada linea, busca el mayor indice de esa sentencia
-                if (indice > mayorIndice) {
-                    mayorIndice = indice;
-                }
-            }
-            return mayorIndice;
-        }*/
         // funcion Codificacion de programas While
         // CODI: WHILE -> N
         function CODI()
@@ -928,7 +885,7 @@
                 } else if (tipo(z) == 3) { // si la sentencia es de tipo 3
                     result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "-1;";
                 } else { // si la sentencia es de tipo 4
-                    result = "while X" + extraer(z,1) + " !=0 do \n" + DeCodiReturn(extraer(z,2)-1n) + "od";
+                    result = "while X" + extraer(z,1) + "!=0 do \n" + DeCodiReturn(extraer(z,2)-1n) + "od";
                 }
                 return result;
             }
