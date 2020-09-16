@@ -74,7 +74,10 @@
                 </h3>
                 <h3>
                     Puedes encontrar <a href="https://caniuse.com/bigint">aqu&iacute;</a> los navegadores en los que se encuentra implementado BigInt nativamente, y a partir de qu&eacute; versi&oacute;n.
-                    Compruebalo con la versión de tu navegador.
+                    Compru&eacute;balo con la de tu navegador.
+                </h3>
+                <h3 style="font-weight: normal;">
+                    Recuerda usar el botón "Calcular" incluido en cada función en lugar de usar la tecla <i>Enter</i> del teclado.
                 </h3>
             </center>
             <br>
@@ -255,6 +258,12 @@
                         <li>while Xi!= 0 do S1 od</li>
                     </ul>
                     <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle). Los &iacute;ndices de las variables deben de ser mayores que 0.</p>
+                    <b>EJEMPLO:</b><br>
+                    <table>
+                        <tr><td>while X1!=0 do<br></td></tr>
+                        <tr><td>X1:=X1+1;<br></td></tr>
+                        <tr><td>od<br></td></tr>
+                    </table>
                     Sentencia o bucle While:
                     <br>
                     <br>
@@ -754,11 +763,6 @@
             }
             return result;
         }
-        // funcion separar sentencia while
-        function tratarLinea(linea)
-        {
-            return linea.replace(/[\s]/g,'').split(''); // elimina los espacios por la cadena vacia, despues separa todos los elementos
-        }
         // funcion Codi con return
         function CodiReturn(indices)
         {
@@ -788,16 +792,12 @@
             
         }
         // funcion mayorIndiceCodigo que devuelve el mayor indice de un codigo
-        function mayorIndiceCodigo(sentencias)
+        function mayorIndiceCodigo(codigo)
         {
             var regex = /(X\d)/gm;
-            var listaVariables = sentencias.match(regex); // obtenemos la lista de variables
+            var listaVariables = codigo.match(regex); // obtenemos la lista de variables
 
             var regex2 = /\d/g;
-            /*var indicesVariables = [];
-            for (var i = 0; i < listaVariables.length; i++) {
-                indicesVariables[i] = listaVariables[i].match(regex2);
-            }*/
             var indicesVariables = listaVariables.map(variable => variable.match(regex2)); // obtenemos la lista de indices
 
             return Math.max.apply(null, indicesVariables); // devolvemos el mayor
@@ -846,9 +846,9 @@
         function extraer(z,i)
         {
             if (i < 1 || i > 2) { // si la variable i fuera menor que 1 o mayor que 2
-                alert("Error. \nEl valor de i (variable deseada) solo puede ser 1 (izquierda) o 2 (derecha).");
+                console.log("Error. \nEl valor de i (variable deseada) solo puede ser 1 (izquierda) o 2 (derecha).");
             } else if (typeof z != 'bigint') { // si z no fuera de tipo bigint
-                alert("Error, \nEl valor del numero debe de ser tipo BigInt");
+                console.log("Error, \nEl valor del numero debe de ser tipo BigInt");
             } else {
                 if (tipo(z) == 0) { // caso base, si el tipo de z es 0
                     return 1n+z/5n;
@@ -905,7 +905,8 @@
                 alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
             } else {
                 var result = "";
-                for (var i = 1n; i < longitud(z); i++) { // desde 1 hasta la longitud de z, calculamos las sentencias
+                console.log("Con z: " + z + " y una longitud de: " + longitud(z));
+                for (var i = 1n; i <= longitud(z); i++) { // desde 1 hasta la longitud de z, calculamos las sentencias
                     result += (decodiReturn(degodelizacionReturn(z+1n,i))); 
                     result += "\n"; // anyadimos un salto de linea al final
             }
@@ -922,6 +923,10 @@
             document.decodificacionProgramasWhile.p.value = result[1];
             document.decodificacionProgramasWhile.decodificacionProgramasWhileResult.value = result[2];
         }
+        // funcion mayorQue que devuelve que elemento es mayor
+        function mayorQue(x,y){
+            return (x>y) ? x : y;
+        }
         // funcion DECODI con return
         function DECODIReturn(z)
         {
@@ -930,7 +935,7 @@
             } else {
                 var result = [];
                 result[0] = decantorizacionGRec(z,3n,1n); // calcula la primera componente de la solucion
-                result[1] = decantorizacionGRec(z,3n,2n) + mayorQue(decantorizacionGRec(z,3n,1n),mayorIndiceCodigo(tratarLinea(DeCodiReturn(decantorizacionGRec(z,3n,3n))))); // segunda componente
+                result[1] = decantorizacionGRec(z,3n,2n) + mayorQue(decantorizacionGRec(z,3n,1n),BigInt(mayorIndiceCodigo(DeCodiReturn(decantorizacionGRec(z,3n,3n))))); // segunda componente
                 result[2] = DeCodiReturn(decantorizacionGRec(z,3n,3n)); // calcula la tercera componente de la solucion
             }
             return result;
