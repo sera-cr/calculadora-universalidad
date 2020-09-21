@@ -4,7 +4,9 @@
          Universidad de Málaga
          Teoría de Autómatas y Lenguajes Formales
          Enero 2020 
-         https://github.com/Shafledome/calculadora-universalidad -->
+         https://github.com/Shafledome/calculadora-universalidad
+         Licencia GPL 3.0
+         Si encuentras un error, mejor solución, un añadido, etc. no dudes en abrir un issue en GitHub contándolo. :) -->
     <head>
         <title>Calculadora Universalidad - TALF</title>
         <style>
@@ -48,7 +50,7 @@
             .content {
                 padding: 16px;
             }
-            /* funcion "sticky" se anyade con js */
+            /* funcion "sticky" se añade con js */
             .sticky {
                 position: fixed;
                 top: 0;
@@ -499,7 +501,7 @@
         // funcion cantorizacion tamanyo dos con return
         function cantorizacionTam2Return(x,y)
         {
-            return (x+y)*(x+y+1n)/2n+y; // formula cantorizacion tamanyo dos
+            return (x+y)*(x+y+1n)/2n+y; // formula cantorizacion tamaño dos
         }
         // funcion cantorizacion generalizada
         // N^(k+1) -> N
@@ -905,8 +907,7 @@
                 alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
             } else {
                 var result = "";
-                console.log("Con z: " + z + " y una longitud de: " + longitud(z));
-                for (var i = 1n; i <= longitud(z); i++) { // desde 1 hasta la longitud de z, calculamos las sentencias
+                for (var i = 1n; i <= longitud(z+1n); i++) { // desde 1 hasta la longitud de z, calculamos las sentencias
                     result += (decodiReturn(degodelizacionReturn(z+1n,i))); 
                     result += "\n"; // anyadimos un salto de linea al final
             }
