@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+    <!-- Serafín Cortés Ramírez
+         Universidad de Málaga
+         Teoría de Autómatas y Lenguajes Formales
+         Enero 2020 
+         https://github.com/Shafledome/calculadora-universalidad
+         Licencia GPL 3.0
+         Si encuentras un error, mejor solución, un añadido, etc. no dudes en abrir un issue en GitHub contándolo. :) -->
+    <head>
+        <title>Calculadora Universalidad - TALF</title>
+        <style>
+            /* cuerpo */
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            /* tablas */
+            tr {
+                padding: 0%;
+            }
+            td {
+                padding: 0%;
+            }
+            /* Estilo navbar */
+            #navbar {
+                overflow: hidden;
+                background-color: #333;
+            }
+            /* Enlaces navbar */
+            #navbar a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+            /* hover navbar */
+            #navbar a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* navbar cambiar version*/
+            #navbar #version {
+                background-color: #A9353E;
+                position: relative;
+            }
+            /* navbar limpiar */
+            #navbar #limpiar {
+                background-color: #4CAF50;
+                position: relative;
+            }
+            /* navbar limpiar hover */
+            #navbar #limpiar:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* navbar cambiar version hover */
+            #navbar #version:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* contenido */
+            .content {
+                padding: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="navbar">
+            <table>
+                <tr>
+                    <td>
+                        <div id="navbar">
+                            <a href="../index.html" id="inicio">Inicio</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionTam2.html" id="cantorT2">
+                                <i>Cantorizaci&oacute;n Tama&ntilde;o 2</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionGen.html" id="cantorG">
+                                <i>Cantorizaci&oacute;n Generalizada</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionTam2.html" id="decantorT2">
+                                <i>Decantorizaci&oacute;n Tama&ntilde;o 2</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionGen.html" id="decantorG">
+                                <i>Decantorizaci&oacute;n Generalizada</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="godDegod.html" id="codgod">
+                                <i>god</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="godDegod.html" id="coddegod">
+                                <i>degod</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="codidecodi.html" id="codcodi">
+                                <i>codi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CodiDeCodi.html" id="codCodi">
+                                <i>Codi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CODIDECODI.html" id="codCODI">
+                                <i>CODI</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="codidecodi.html" id="decodecodi">
+                                <i>decodi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CodiDeCodi.html" id="decoDeCodi">
+                                <i>DeCodi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CODIDECODI.html" id="decoDECODI">
+                                <i>DECODI</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <a href ="" onclick="limpiarCampos()" id="limpiar">
+                <i>Limpiar Campos</i>
+            </a>
+            <a href ="../singleFileVersion/singleFile.html" id="version">
+                <i>Cambiar a p&aacute;gina &uacute;nica</i>
+            </a>
+        </div>
+        <center>
+            <br>
+            <br>
+            <form name="codificacionGodel">
+                <h2>
+                    Codificaci&oacute;n de G&ouml;del o <i>g&ouml;delizaci&oacute;n</i>, <i>god</i>
+                </h2>
+                <h3 style="font-weight: normal">Introduce todos los valores iguales o mayores que 0 deseados separados por ; y sin espacios.</h3>
+                <i><b>Ejemplo: </b>1;2;3;4</i>
+                <br>
+                <br>
+                <textarea name ="numeros" rows="4" cols="50"></textarea>
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="godelizacion()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="60" name="codificacionGodelResult" readonly>
+            </form>
+            <br>
+            <br>
+            <form name="decodificacionGodel">
+                <h2>
+                    Decodificaci&oacute;n de G&ouml;del o <i>deg&ouml;delizaci&oacute;n</i>, <i>degod</i>
+                </h2>
+                <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0 <i>(devuelve las k componentes en un vector).</i></h3>
+                N&uacute;mero:&nbsp;&nbsp;<input type="text" size="60" name="n">
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="degodelizacion()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="60" name="decodificacionGodelResult" readonly>
+            </form>
+        </center>
+    </body>
+    <script>
+        /*
+         * Esta calculadora utiliza la conversion al tipo de datos BigInt
+         * Un tipo de datos ahora nativo en JavaScript desde el 2 de diciembre del 2018, fuente: https://github.com/peterolson/BigInteger.js/tree/master
+         * Por lo que, en los navegadores Edge, Internet Explorer y Safari es posible que no funcionen las funciones que se encuentran en esta calculadora
+         * En Android, funciona en todos los navegadores menos en Safari.
+         * Otro problema de usar el tipo BigInt, es que como tipo de dato entero, la parte decimal es truncada, pero para nuestras funciones no es necesario
+         * Para escribir un numero BigInt, basta con anyadir n al final (por ejemplo 0n) o invocar al constructor (BigInt(0))
+         */
+        // funcion para limpiar todos los campos
+        function limpiaCampos()
+        {
+            document.codificacionGodel.numeros.value = "";
+            document.codificacionGodel.codificacionGodelResult.value = "";
+            document.decodificacionGodel.n.value = "";
+            document.decodificacionGodel.decodificacionGodelResult.value = "";
+        }
+        // calculo de una raiz cuadrada con BigInt
+        function sqrtBI(value)
+        {
+            if (value < 0n) { // si el valor es menor que 0
+                throw "no es posible la raiz de 0";
+            }
+            if (value < 2n) { // si la raiz es 1
+                return value;
+            }
+            // metodo de newton para la el calculo de la raiz cuadrada
+            // metodo de newton https://es.wikipedia.org/wiki/M%C3%A9todo_de_Newton
+            // https://golb.hplar.ch/2018/09/javascript-bigint.html
+            function newtonIteration(n, x0) {
+                const x1 = ((n / x0) + x0) >> 1n;
+                if (x0 === x1 || x0 === (x1 - 1n)) {
+                    return x0;
+                }
+                return newtonIteration(n, x1);
+            }
+            return newtonIteration(value, 1n);
+        }
+        // funcion cantorizacion tamanyo dos con return
+        function cantorizacionTam2Return(x,y)
+        {
+            return (x+y)*(x+y+1n)/2n+y; // formula cantorizacion tamaño dos
+        }
+        // funcion que convierte todos los elementos del array a bigint
+        function leeArray(array) {
+            var result = [];
+            for (i = 0; i < array.length; i++) {
+                var v = BigInt(array[i]);
+                if (v < 0n) {
+                    document.cantorizacionGeneral.cantorizacionGResult.value = "";
+                    alert("Los numeros introducidos deben de ser naturales.");
+                    break;
+                }
+                result[i] = v;
+            }
+            return result;
+        }
+        // funcion cantorizacion generalizada recursiva
+        function cantorizacionGRec(nums)
+        {
+            if (nums.length == 1) { // caso base para 1 elemento
+                return nums[0];
+            } else if (nums.length == 2) { // caso base para 2 elementos
+                return cantorizacionTam2Return(nums[0],nums[1]);
+            } else {
+                var n0 = nums[0];
+                nums.shift(); // eliminamos el primer elemento del array, que previamente lo hemos almacenado en n0
+                return cantorizacionTam2Return(n0,cantorizacionGRec(nums)); // calculo de forma recursiva
+            }
+        }
+        // funcion diagonal o d(z) siendo z nuestro numero
+        // calculado aritmeticamente
+        function diagonal(n)
+        {
+            return (sqrtBI(8n * n + 1n) - 1n) / 2n; // Calculo de la funcion diagonal. BigInt ya realiza truncado de parte decimal
+        }
+        // funcion decantorizacion tamanyo 2 primera componente
+        // N -> N
+        function decantorizacionTam2PrimComp(n)
+        {
+            return diagonal(n) - decantorizacionTam2SegComp(n); // calculo de la decantorizacion de tamanyo 2 de la segunda componente
+        }
+        // funcion decantorizacion tamanyo 2 segunda componente
+        // N -> N
+        function decantorizacionTam2SegComp(n)
+        {
+            return n - cantorizacionTam2Return(diagonal(n),0n); // calculo de la decantorizacion de tamanyo 2 de la primera componente
+        }
+        // funcion decantorizacion generalizada recursiva
+        function decantorizacionGRec(n,kp1,i)
+        {
+            if (kp1 == 1n) { // caso base, si se trata de una decantorizacion de sigma^1 1,1 (N -> N)
+                return n;
+            } else if (i == 1n) { // caso base, si se trata de la primera componente
+                return decantorizacionTam2PrimComp(n);
+            } else {
+                return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1n,i-1n) // calculo recursivo
+            }
+        }
+        // funcion L(x) -> del anexo 3 Codificacion de Godel, del libro: Teoría de Autómatas y Lenguajes Formales, Gonzalo Ramos Jimenez & Rafael Morales Bueno (2011)
+        // nuestra funcion L(x) la calculamos como array.length
+        // funcion godelizacion
+        // N^* -> N
+        function godelizacion()
+        {
+            var error = false; // si se ha producido un error, no modificamos el campo resultado
+            // cogemos el texto introducido y separamos por cada ';'. Convertimos a bigint los elementos del array resultante
+            var numbers = leeArray(document.codificacionGodel.numeros.value.split(/[;]/)); 
+            for (var i = 0; i < numbers.length; i++) {
+                if (typeof numbers[i] != 'bigint' || numbers[i] < 0n) { // Comprobamos que todos los elementos introducidos sean validos, sino error
+                    error = true;
+                    document.codificacionGodel.codificacionGodelResult.value = "";        
+                    alert("Error. \nUno de los valores introducidos no es valido.");
+                    break;
+                }
+            }
+            if (!error) document.codificacionGodel.codificacionGodelResult.value = godelizacionReturn(numbers); // si no se ha producido error, llamamos a la funcion que realiza el calculo
+        }
+        // funcion godelizacion return
+        function godelizacionReturn(array)
+        {
+            var result = 0n;
+            if (array.length != 0) { // si el array no es de tamanyo 0, hacemos su calculo usando funciones anteriores
+                result = cantorizacionTam2Return(BigInt(array.length-1),cantorizacionGRec(array))+1n;
+            }
+            return result;
+        }
+        // funcion longitud (dado un z)
+        function longitud(z)
+        {
+            if (z == 0n) { // caso base, si z es 0
+                return 0n;
+            } else {
+                return decantorizacionTam2PrimComp(z-1n)+1n; // calculo de la funcion
+            }
+        }
+        // funcion degodelizacion
+        // N^2 -> N
+        function degodelizacion()
+        {
+            var z = BigInt(document.decodificacionGodel.n.value); // cogemos el valor a degodelizar y lo convertimos a bigint
+            if (typeof z != 'bigint' || z < 0n) { // si no se ha introducido un numero, error
+                document.decodificacionGodel.decodificacionGodelResult.value = "";
+                alert("Error. \nEl valor introducido no es valido."); 
+            } else {
+                var result = [];
+                result.unshift(")"); // por comodidad, empezamos a componer la solucion desde el elemento longitud(z)-esimo hasta el primer elemento
+                for (var k = longitud(z); k >= 1n; k--) {
+                    result.unshift(degodelizacionReturn(z,k)); // llamamos a la funcion que realiza el calculo
+                    result.unshift(",");
+                }
+                result.shift(); // eliminamos la ultima coma introducida y anyadimos un parentesis
+                result.unshift("(");
+                document.decodificacionGodel.decodificacionGodelResult.value = result.join(''); // juntamos todos los elementos del array solucion en un unico String
+            }
+        }
+        // funcion degodelizacion con return
+        function degodelizacionReturn(z,k)
+        {
+            if (z == 0n || k > longitud(z)) { // caso base si z es 0, o su longitud es 0
+                return 0n;
+            } else {
+                return decantorizacionGRec(decantorizacionTam2SegComp(z-1n),longitud(z),k); // calculo de la funcion
+            }
+        }
+    </script>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    <!-- Serafín Cortés Ramírez
+         Universidad de Málaga
+         Teoría de Autómatas y Lenguajes Formales
+         Enero 2020 
+         https://github.com/Shafledome/calculadora-universalidad
+         Licencia GPL 3.0
+         Si encuentras un error, mejor solución, un añadido, etc. no dudes en abrir un issue en GitHub contándolo. :) -->
+    <head>
+        <title>Calculadora Universalidad - TALF</title>
+        <style>
+            /* cuerpo */
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            /* tablas */
+            tr {
+                padding: 0%;
+            }
+            td {
+                padding: 0%;
+            }
+            /* Estilo navbar */
+            #navbar {
+                overflow: hidden;
+                background-color: #333;
+            }
+            /* Enlaces navbar */
+            #navbar a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+            /* hover navbar */
+            #navbar a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* navbar cambiar version*/
+            #navbar #version {
+                background-color: #A9353E;
+                position: relative;
+            }
+            /* navbar limpiar */
+            #navbar #limpiar {
+                background-color: #4CAF50;
+                position: relative;
+            }
+            /* navbar limpiar hover */
+            #navbar #limpiar:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* navbar cambiar version hover */
+            #navbar #version:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* contenido */
+            .content {
+                padding: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="navbar">
+            <table>
+                <tr>
+                    <td>
+                        <div id="navbar">
+                            <a href="../index.html" id="inicio">Inicio</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionTam2.html" id="cantorT2">
+                                <i>Cantorizaci&oacute;n Tama&ntilde;o 2</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionGen.html" id="cantorG">
+                                <i>Cantorizaci&oacute;n Generalizada</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionTam2.html" id="decantorT2">
+                                <i>Decantorizaci&oacute;n Tama&ntilde;o 2</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionGen.html" id="decantorG">
+                                <i>Decantorizaci&oacute;n Generalizada</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="godDegod.html" id="codgod">
+                                <i>god</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="godDegod.html" id="coddegod">
+                                <i>degod</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="codidecodi.html" id="codcodi">
+                                <i>codi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CodiDeCodi.html" id="codCodi">
+                                <i>Codi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CODIDECODI.html" id="codCODI">
+                                <i>CODI</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="codidecodi.html" id="decodecodi">
+                                <i>decodi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CodiDeCodi.html" id="decoDeCodi">
+                                <i>DeCodi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CODIDECODI.html" id="decoDECODI">
+                                <i>DECODI</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <a href ="" onclick="limpiarCampos()" id="limpiar">
+                <i>Limpiar Campos</i>
+            </a>
+            <a href ="../singleFileVersion/singleFile.html" id="version">
+                <i>Cambiar a p&aacute;gina &uacute;nica</i>
+            </a>
+        </div>
+        <center>
+            <br>
+            <br>
+            <form name="cantorizacionT2">
+                <h2>
+                    Codificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>cantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                    &sigma;<sup style="font-size: 60%;">2</sup><sub style="font-size: 60%;">1</sub>
+                </h2>
+                <h3 style="font-weight: normal">Introduce un n&uacute;mero X y un n&uacute;mero Y, ambos mayores o iguales que 0.</h3>
+                X:&nbsp;&nbsp;<input type="text" size="60" name="x"><br><br>
+                Y:&nbsp;&nbsp;<input type="text" size="60" name="y">
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="cantorizacionTam2()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="60" name="cantorizacionTam2Result" readonly>
+            </form>
+            <br>
+            <br>
+            <form name="decantorizacionT2">
+                <h2>
+                    Decodificaci&oacute;n de Cantor de tama&ntilde;o dos o <i>decantorizaci&oacute;n de tama&ntilde;o dos</i>, 
+                    (&sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">2,1</sub>,
+                    &sigma;<sup style="font-size: 60%;">1</sup><sub style="font-size: 60%;">2,2</sub>)
+                </h2>
+                <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0.</h3>
+                N&uacute;mero:&nbsp;&nbsp;<input type="text" size="60" name="n">
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="decantorizacionTam2()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="60" name="decantorizacionTam2Result" readonly>
+            </form>
+        </center>
+    </body>
+    <script>
+        /*
+         * Esta calculadora utiliza la conversion al tipo de datos BigInt
+         * Un tipo de datos ahora nativo en JavaScript desde el 2 de diciembre del 2018, fuente: https://github.com/peterolson/BigInteger.js/tree/master
+         * Por lo que, en los navegadores Edge, Internet Explorer y Safari es posible que no funcionen las funciones que se encuentran en esta calculadora
+         * En Android, funciona en todos los navegadores menos en Safari.
+         * Otro problema de usar el tipo BigInt, es que como tipo de dato entero, la parte decimal es truncada, pero para nuestras funciones no es necesario
+         * Para escribir un numero BigInt, basta con anyadir n al final (por ejemplo 0n) o invocar al constructor (BigInt(0))
+         */
+        // funcion para limpiar todos los campos
+        function limpiaCampos()
+        {
+            document.cantorizacionT2.x.value = "";
+            document.cantorizacionT2.y.value = "";
+            document.cantorizacionT2.cantorizacionTam2Result.value = "";
+            document.decantorizacionT2.n.value = "";
+            document.decantorizacionT2.decantorizacionTam2Result.value = "";
+        }
+        // calculo de una raiz cuadrada con BigInt
+        function sqrtBI(value)
+        {
+            if (value < 0n) { // si el valor es menor que 0
+                throw "no es posible la raiz de 0";
+            }
+            if (value < 2n) { // si la raiz es 1
+                return value;
+            }
+            // metodo de newton para la el calculo de la raiz cuadrada
+            // metodo de newton https://es.wikipedia.org/wiki/M%C3%A9todo_de_Newton
+            // https://golb.hplar.ch/2018/09/javascript-bigint.html
+            function newtonIteration(n, x0) {
+                const x1 = ((n / x0) + x0) >> 1n;
+                if (x0 === x1 || x0 === (x1 - 1n)) {
+                    return x0;
+                }
+                return newtonIteration(n, x1);
+            }
+            return newtonIteration(value, 1n);
+        }
+        // funcion cantorizacion tamanyo dos
+        // N^2 -> N
+        function cantorizacionTam2()
+        {
+            var x = BigInt(document.cantorizacionT2.x.value); // valor x recogido del formulario html
+            var y = BigInt(document.cantorizacionT2.y.value); // valor y recogido del formulario html
+            if ((typeof x != 'bigint' || x < 0n) || (typeof y != 'bigint' || y < 0n)) { // si no se ha introducido un numero, x o y no sera de tipo bigint, luego error
+                document.cantorizacionT2.cantorizacionTam2Result.value = "";
+                alert("Error. \nX e Y deben de ser igual o mayores que 0.")
+            } else {
+                document.cantorizacionT2.cantorizacionTam2Result.value = cantorizacionTam2Return(x,y); // llamamos a la funcion que realiza los calculos
+            }
+        }
+        // funcion cantorizacion tamanyo dos con return
+        function cantorizacionTam2Return(x,y)
+        {
+            return (x+y)*(x+y+1n)/2n+y; // formula cantorizacion tamaño dos
+        }
+        // funcion decantorizacion tamanyo dos
+        // N -> N^2
+        function decantorizacionTam2()
+        {
+            var numero = BigInt(document.decantorizacionT2.n.value); // numero natural recogido del formulario html
+            if (typeof numero != 'bigint' || numero < 0n) { // si hemos recibido un elemento que no es un numero, entonces este no habra sido convertido a bigint, error
+                document.decantorizacionT2.decantorizacionTam2Result.value = "";
+                alert("Error. \nEl numero tiene que ser mayor o igual que 0.")
+            } else {
+                document.decantorizacionT2.decantorizacionTam2Result.value = decantorizacionTam2Return(numero); // llamamos a la funcion que calcula la decantorizacion de tamanyo dos
+            }
+        }
+        // funcion decantorizacion tamanyo dos con return
+        function decantorizacionTam2Return(n)
+        {
+            return "(" + decantorizacionTam2PrimComp(n) + "," + decantorizacionTam2SegComp(n) + ")"; // llamamos al calculo de cada componente (primera y segunda) de la decantorizacion
+        }
+        // funcion decantorizacion tamanyo 2 primera componente
+        // N -> N
+        function decantorizacionTam2PrimComp(n)
+        {
+            return diagonal(n) - decantorizacionTam2SegComp(n); // calculo de la decantorizacion de tamanyo 2 de la segunda componente
+        }
+        // funcion decantorizacion tamanyo 2 segunda componente
+        // N -> N
+        function decantorizacionTam2SegComp(n)
+        {
+            return n - cantorizacionTam2Return(diagonal(n),0n); // calculo de la decantorizacion de tamanyo 2 de la primera componente
+        }
+        // funcion diagonal o d(z) siendo z nuestro numero
+        // calculado aritmeticamente
+        function diagonal(n)
+        {
+            return (sqrtBI(8n * n + 1n) - 1n) / 2n; // Calculo de la funcion diagonal. BigInt ya realiza truncado de parte decimal
+        }
+    </script>
+</html>

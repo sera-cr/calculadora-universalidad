@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+    <!-- Serafín Cortés Ramírez
+         Universidad de Málaga
+         Teoría de Autómatas y Lenguajes Formales
+         Enero 2020 
+         https://github.com/Shafledome/calculadora-universalidad
+         Licencia GPL 3.0
+         Si encuentras un error, mejor solución, un añadido, etc. no dudes en abrir un issue en GitHub contándolo. :) -->
+    <head>
+        <title>Calculadora Universalidad - TALF</title>
+        <style>
+            /* cuerpo */
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            /* tablas */
+            tr {
+                padding: 0%;
+            }
+            td {
+                padding: 0%;
+            }
+            /* Estilo navbar */
+            #navbar {
+                overflow: hidden;
+                background-color: #333;
+            }
+            /* Enlaces navbar */
+            #navbar a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+            /* hover navbar */
+            #navbar a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* navbar cambiar version*/
+            #navbar #version {
+                background-color: #A9353E;
+                position: relative;
+            }
+            /* navbar limpiar */
+            #navbar #limpiar {
+                background-color: #4CAF50;
+                position: relative;
+            }
+            /* navbar limpiar hover */
+            #navbar #limpiar:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* navbar cambiar version hover */
+            #navbar #version:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            /* contenido */
+            .content {
+                padding: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="navbar">
+            <table>
+                <tr>
+                    <td>
+                        <div id="navbar">
+                            <a href="../index.html" id="inicio">Inicio</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionTam2.html" id="cantorT2">
+                                <i>Cantorizaci&oacute;n Tama&ntilde;o 2</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionGen.html" id="cantorG">
+                                <i>Cantorizaci&oacute;n Generalizada</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionTam2.html" id="decantorT2">
+                                <i>Decantorizaci&oacute;n Tama&ntilde;o 2</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="cantorizacionDecantorizacionGen.html" id="decantorG">
+                                <i>Decantorizaci&oacute;n Generalizada</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="godDegod.html" id="codgod">
+                                <i>god</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="godDegod.html" id="coddegod">
+                                <i>degod</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="codidecodi.html" id="codcodi">
+                                <i>codi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CodiDeCodi.html" id="codCodi">
+                                <i>Codi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CODIDECODI.html" id="codCODI">
+                                <i>CODI</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="codidecodi.html" id="decodecodi">
+                                <i>decodi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CodiDeCodi.html" id="decoDeCodi">
+                                <i>DeCodi</i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="navbar">
+                            <a href="CODIDECODI.html" id="decoDECODI">
+                                <i>DECODI</i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <a href ="" onclick="limpiarCampos()" id="limpiar">
+                <i>Limpiar Campos</i>
+            </a>
+            <a href ="../singleFileVersion/singleFile.html" id="version">
+                <i>Cambiar a p&aacute;gina &uacute;nica</i>
+            </a>
+        </div>
+        <center>
+            <br>
+            <br>
+            <form name="codificacionCodigosWhile">
+                <h2>
+                    Codificaci&oacute;n de c&oacute;digos While o <i>Codi</i>
+                </h2>
+                <h3 style="font-weight: normal;">Introduzca el c&oacute;digo While a codificar<b> e introduzca ; al final de cada sentencia.</b></h3>
+                <p>Recuerda, las sentencias posibles son:</p>
+                <ul>
+                    <li>Xi:=0;</li>
+                    <li>Xi:=Xj;</li>
+                    <li>Xi:=Xj+1;</li>
+                    <li>Xi:=Xj-1;</li>
+                    <li>while Xi!=0 do S1 od</li>
+                </ul>
+                <p>Donde debes sustituir i y j por el indice de la variable (y S1 siendo el c&oacute;digo dentro del bucle). Los &iacute;ndices de las variables deben de ser mayores que 0.</p>
+                <b>EJEMPLO:</b><br>
+                <table>
+                    <tr><td>X1:=0;<br></td></tr>
+                    <tr><td>X1:=X1+1;<br></td></tr>
+                    <tr><td>while X1!=0 do<br></td></tr>
+                    <tr><td>X2:=X1+1;<br></td></tr>
+                    <tr><td>od<br></td></tr>
+                </table>
+                C&oacute;digo While:
+                <br>
+                <br>
+                <textarea name="codigo" rows="4" cols="50"></textarea>
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="Codi()">
+                <br>
+                <br>
+                Resultado:&nbsp;&nbsp;<input type="text" size="60" name="codificacionCodigosWhileResult" readonly>
+            </form>
+            <br>
+            <br>
+            <form name="decodificacionCodigosWhile">
+                <h2>
+                    Decodificaci&oacute;n de c&oacute;digos While o <i>DeCodi</i>
+                </h2>
+                <h3 style="font-weight: normal;">Introduce un n&uacute;mero mayor o igual que 0.</h3>
+                N&uacute;mero:&nbsp;&nbsp;<input type="text" size="60" name="n">
+                <br>
+                <br>
+                <input type="button" value="Calcular" onclick="DeCodi()">
+                <br>
+                <br>
+                Resultado:
+                <br>
+                <br>
+                <textarea name="decodificacionCodigosWhileResult" rows="4" cols="50" readonly></textarea>
+            </form>
+            <br>
+            <br>
+        </center>
+    </body>
+    <script>
+        /*
+         * Esta calculadora utiliza la conversion al tipo de datos BigInt
+         * Un tipo de datos ahora nativo en JavaScript desde el 2 de diciembre del 2018, fuente: https://github.com/peterolson/BigInteger.js/tree/master
+         * Por lo que, en los navegadores Edge, Internet Explorer y Safari es posible que no funcionen las funciones que se encuentran en esta calculadora
+         * En Android, funciona en todos los navegadores menos en Safari.
+         * Otro problema de usar el tipo BigInt, es que como tipo de dato entero, la parte decimal es truncada, pero para nuestras funciones no es necesario
+         * Para escribir un numero BigInt, basta con anyadir n al final (por ejemplo 0n) o invocar al constructor (BigInt(0))
+         */
+        // funcion para limpiar todos los campos
+        function limpiaCampos()
+        {
+            document.codificacionCodigosWhile.codigo.value = "";
+            document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = "";
+            document.decodificacionCodigosWhile.n.value = "";
+            document.decodificacionCodigosWhile.decodificacionCodigosWhileResult.value = "";
+        }
+        // calculo de una raiz cuadrada con BigInt
+        function sqrtBI(value)
+        {
+            if (value < 0n) { // si el valor es menor que 0
+                throw "no es posible la raiz de 0";
+            }
+            if (value < 2n) { // si la raiz es 1
+                return value;
+            }
+            // metodo de newton para la el calculo de la raiz cuadrada
+            // metodo de newton https://es.wikipedia.org/wiki/M%C3%A9todo_de_Newton
+            // https://golb.hplar.ch/2018/09/javascript-bigint.html
+            function newtonIteration(n, x0) {
+                const x1 = ((n / x0) + x0) >> 1n;
+                if (x0 === x1 || x0 === (x1 - 1n)) {
+                    return x0;
+                }
+                return newtonIteration(n, x1);
+            }
+            return newtonIteration(value, 1n);
+        }
+        // funcion cantorizacion tamanyo dos con return
+        function cantorizacionTam2Return(x,y)
+        {
+            return (x+y)*(x+y+1n)/2n+y; // formula cantorizacion tamaño dos
+        }
+        // funcion que convierte todos los elementos del array a bigint
+        function leeArray(array) {
+            var result = [];
+            for (i = 0; i < array.length; i++) {
+                var v = BigInt(array[i]);
+                if (v < 0n) {
+                    document.cantorizacionGeneral.cantorizacionGResult.value = "";
+                    alert("Los numeros introducidos deben de ser naturales.");
+                    break;
+                }
+                result[i] = v;
+            }
+            return result;
+        }
+        // funcion cantorizacion generalizada recursiva
+        function cantorizacionGRec(nums)
+        {
+            if (nums.length == 1) { // caso base para 1 elemento
+                return nums[0];
+            } else if (nums.length == 2) { // caso base para 2 elementos
+                return cantorizacionTam2Return(nums[0],nums[1]);
+            } else {
+                var n0 = nums[0];
+                nums.shift(); // eliminamos el primer elemento del array, que previamente lo hemos almacenado en n0
+                return cantorizacionTam2Return(n0,cantorizacionGRec(nums)); // calculo de forma recursiva
+            }
+        }
+        // funcion diagonal o d(z) siendo z nuestro numero
+        // calculado aritmeticamente
+        function diagonal(n)
+        {
+            return (sqrtBI(8n * n + 1n) - 1n) / 2n; // Calculo de la funcion diagonal. BigInt ya realiza truncado de parte decimal
+        }
+        // funcion decantorizacion tamanyo 2 primera componente
+        // N -> N
+        function decantorizacionTam2PrimComp(n)
+        {
+            return diagonal(n) - decantorizacionTam2SegComp(n); // calculo de la decantorizacion de tamanyo 2 de la segunda componente
+        }
+        // funcion decantorizacion tamanyo 2 segunda componente
+        // N -> N
+        function decantorizacionTam2SegComp(n)
+        {
+            return n - cantorizacionTam2Return(diagonal(n),0n); // calculo de la decantorizacion de tamanyo 2 de la primera componente
+        }
+        // funcion decantorizacion generalizada recursiva
+        function decantorizacionGRec(n,kp1,i)
+        {
+            if (kp1 == 1n) { // caso base, si se trata de una decantorizacion de sigma^1 1,1 (N -> N)
+                return n;
+            } else if (i == 1n) { // caso base, si se trata de la primera componente
+                return decantorizacionTam2PrimComp(n);
+            } else {
+                return decantorizacionGRec(decantorizacionTam2SegComp(n),kp1-1n,i-1n) // calculo recursivo
+            }
+        }
+        // funcion godelizacion return
+        function godelizacionReturn(array)
+        {
+            var result = 0n;
+            if (array.length != 0) { // si el array no es de tamanyo 0, hacemos su calculo usando funciones anteriores
+                result = cantorizacionTam2Return(BigInt(array.length-1),cantorizacionGRec(array))+1n;
+            }
+            return result;
+        }
+        // funcion longitud (dado un z)
+        function longitud(z)
+        {
+            if (z == 0n) { // caso base, si z es 0
+                return 0n;
+            } else {
+                return decantorizacionTam2PrimComp(z-1n)+1n; // calculo de la funcion
+            }
+        }
+        // funcion degodelizacion con return
+        function degodelizacionReturn(z,k)
+        {
+            if (z == 0n || k > longitud(z)) { // caso base si z es 0, o su longitud es 0
+                return 0n;
+            } else {
+                return decantorizacionGRec(decantorizacionTam2SegComp(z-1n),longitud(z),k); // calculo de la funcion
+            }
+        }
+        // funcion tipoLinea, devuelve el tipo de la sentencia while
+        function tipoLinea(sentencia) {
+            let regexs = [/X.:=0;/g,/X.:=X.;/g,/X.:=X.\+1;/g,/X.:=X.\-1;/g,/while\sX.!=0\sdo\n[^]*\nod/g];
+            var result = -1; // si es una sentencia erronea
+            for (var i = regexs.length-1; i >= 0; i--) {
+                if (regexs[i].test(sentencia) == true) {
+                result = i;
+                break;
+                }
+            }
+            return result;
+        }
+        function extraerIndices(sentencia)
+        {
+            var regex = /([^:=;X\n\+\-]+)/g
+            var regexWhile = /(\d+)|^(?!do|;|od)([:=;X\+\-\d+]+)/gm;
+            var ti = tipoLinea(sentencia);
+            var result;
+
+            switch(ti) {
+              case 0:
+                result = sentencia.match(regex);
+                result.pop(); // eliminamos el 0
+                break;
+              case 1:
+                result = sentencia.match(regex);
+                break;
+              case 2:
+                result = sentencia.match(regex);
+                result.pop();
+                break;
+              case 3:
+                result = sentencia.match(regex);
+                result.pop();
+                break;
+              case 4:
+                result = sentencia.match(regexWhile);
+                break;
+            }
+            return result;
+        }
+        // funcion codi de codificacion de sentencias while
+        // Cod_While -> N
+        function codi()
+        {
+            var linea = document.codificacionSentenciasWhile.sentencia.value;
+            var result = codiReturn(linea);
+            if (typeof result == 'bigint') {
+                document.codificacionSentenciasWhile.codificacionSentenciasWhileResult.value = result; // si la solucion es un bigint, es correcta
+            } else {
+                alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
+            }
+        }
+        // funcion codi con return
+        function codiReturn(sentencia)
+        {
+            var ti = tipoLinea(sentencia);
+            var result;
+            var indices = extraerIndices(sentencia);
+
+            switch(ti) {
+                case 0:
+                  result = 5n*(BigInt(indices[0]-1));
+                  break;
+                case 1:
+                  result = 5n*cantorizacionTam2Return(BigInt(indices[0]-1),BigInt(indices[1]-1))+1n;
+                  break;
+                case 2:
+                  result = 5n*cantorizacionTam2Return(BigInt(indices[0]-1),BigInt(indices[1]-1))+2n;
+                  break;
+                case 3:
+                  result = 5n*cantorizacionTam2Return(BigInt(indices[0]-1),BigInt(indices[1]-1))+3n;
+                  break;
+                case 4:
+                  var ind = indices.slice(2,indices.length);
+                  result = 5n*cantorizacionTam2Return(BigInt(indices[0]-1),CodiReturn(ind))+4n;
+                  break;
+            }
+            return result;
+        }
+        // funcion Codi con return
+        function CodiReturn(indices)
+        {
+            var result = [];
+            for (var i = 0; i < indices.length; i++) {
+                result[i] = codiReturn(indices[i]);
+            }
+            return godelizacionReturn(result)-1n; // godelizamos
+        }
+        // funcion tipo de sentencia
+        // tipo: N -> {0,1,2,3,4}
+        function tipo(z)
+        {
+            if (typeof z != 'bigint') { // si z no fuera de tipo bigint
+                return -1;
+            } else {
+                return z % 5n; // calcula la funcion tipo
+            }
+        }
+        // funcion extraer
+        // extr: N x {1,2} -> N
+        function extraer(z,i)
+        {
+            if (i < 1 || i > 2) { // si la variable i fuera menor que 1 o mayor que 2
+                console.log("Error. \nEl valor de i (variable deseada) solo puede ser 1 (izquierda) o 2 (derecha).");
+            } else if (typeof z != 'bigint') { // si z no fuera de tipo bigint
+                console.log("Error, \nEl valor del numero debe de ser tipo BigInt");
+            } else {
+                if (tipo(z) == 0) { // caso base, si el tipo de z es 0
+                    return 1n+z/5n;
+                } else {
+                    if (i == 1) { // si se busca la variable izquierda
+                        return 1n+decantorizacionTam2PrimComp((z-tipo(z))/5n);
+                    } else { // si se busca la variable derecha
+                        return 1n+decantorizacionTam2SegComp((z-tipo(z))/5n);
+                    }
+                }
+            }
+        }
+        // funcion decodificacion de sentencias While
+        // decodi: N -> Cod_While
+        function decodi()
+        {
+            var z = BigInt(document.decodificacionSentenciasWhile.n.value); // valor de z convertido a bigint
+            var result = decodiReturn(z); // llama a la funcion que realiza los calculos
+            document.decodificacionSentenciasWhile.decodificacionSentenciasWhileResult.value = result;
+        }
+        // funcion decodi con return
+        function decodiReturn(z)
+        {
+            if (typeof z != 'bigint') {
+                return -1;
+            } else {
+                var result = null;
+                if (tipo(z) == 0) { // si la sentencia es de tipo 0
+                    result = "X" + extraer(z,1) + ":=0;";
+                } else if (tipo(z) == 1) { // si la sentencia es de tipo 1
+                    result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + ";";
+                } else if (tipo(z) == 2) { // si la sentencia es de tipo 2
+                    result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "+1;";
+                } else if (tipo(z) == 3) { // si la sentencia es de tipo 3
+                    result = "X" + extraer(z,1) + ":=X" + extraer(z,2) + "-1;";
+                } else { // si la sentencia es de tipo 4
+                    result = "while X" + extraer(z,1) + "!=0 do \n" + DeCodiReturn(extraer(z,2)-1n) + "od";
+                }
+                return result;
+            }
+        }
+        // funcion DeCodi con return
+        function DeCodiReturn(z)
+        {
+            if (typeof z != 'bigint') { // si z no fuera bigint, es un error
+                alert("Error. \nEl numero a introducir debe de ser mayor o igual que 0.");
+            } else {
+                var result = "";
+                for (var i = 1n; i <= longitud(z+1n); i++) { // desde 1 hasta la longitud de z, calculamos las sentencias
+                    result += (decodiReturn(degodelizacionReturn(z+1n,i))); 
+                    result += "\n"; // anyadimos un salto de linea al final
+            }
+            return result;
+            }
+        }
+        // funcion que separa todas las sentencias del codigo while
+        function separarSentencias(lineas)
+        {
+            var regex = /([:=;X\+\-\d+]+)|(while\sX.!=0\sdo)([^]*)(od)/gm
+            
+            return lineas.match(regex);
+        }
+        // funcion Codificacion de codigos
+        function Codi()
+        {
+            var sentencias = separarSentencias(document.codificacionCodigosWhile.codigo.value);
+            var result = CodiReturn(sentencias); // llama a la funcion que realiza el calculo
+            if (typeof result == 'bigint') { // si el resultado es bigint, es una solucion
+                document.codificacionCodigosWhile.codificacionCodigosWhileResult.value = result;
+            } else { // sino, es un error
+                alert("Error. \nCompruebe la expresion introducida en la caja de texto y vuelva a intentarlo.");
+            }
+            
+        }
+        // funcion decodificacion de codigos While
+        // DeCodi: N -> Cod_While
+        function DeCodi()
+        {
+            var z = BigInt(document.decodificacionCodigosWhile.n.value); // valor de z convertido a bigint
+            document.decodificacionCodigosWhile.decodificacionCodigosWhileResult.value = DeCodiReturn(z); // llama a la funcion que realiza el calculo
+            
+        }
+    </script>
+</html>
